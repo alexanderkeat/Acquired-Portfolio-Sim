@@ -329,21 +329,35 @@ def xirr(cashflows, terminal_date, terminal_value):
 
 
 def make_chart(timeseries, logy, path="chart.png"):
+    # ponytail: styled to match report.html (Acquired brand: cream, near-black, teal, gold)
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(timeseries.date, timeseries.portfolio_value, label="Portfolio")
-    ax.plot(timeseries.date, timeseries.benchmark_value, label="Benchmark (S&P 500 TR)")
-    ax.plot(timeseries.date, timeseries.invested, label="Invested (cost basis)", linestyle="--")
+    from matplotlib.ticker import FuncFormatter
+    BG, INK, MUTED, TEAL, GOLD, GRID = "#fffcf5", "#1b1915", "#8c8574", "#0e7d61", "#7a5f28", "#efe8d6"
+    fig, ax = plt.subplots(figsize=(11, 5.6), facecolor=BG)
+    ax.set_facecolor(BG)
+    t = timeseries
+    ax.fill_between(t.date, t.portfolio_value, color=TEAL, alpha=0.08, linewidth=0)
+    ax.plot(t.date, t.portfolio_value, color=TEAL, lw=2.2, label="Acquired portfolio")
+    ax.plot(t.date, t.benchmark_value, color=GOLD, lw=1.8, label="S&P 500 total return, same dollars")
+    ax.plot(t.date, t.invested, color=MUTED, lw=1.4, ls=(0, (4, 3)), label="Cash invested")
+    for col, color in (("portfolio_value", TEAL), ("benchmark_value", GOLD), ("invested", MUTED)):
+        ax.annotate(f"${t[col].iloc[-1]/1000:,.0f}k", (t.date.iloc[-1], t[col].iloc[-1]),
+                    xytext=(6, 0), textcoords="offset points", va="center", color=color, fontsize=9, fontweight="bold")
     if logy:
         ax.set_yscale("log")
-    ax.set_ylabel("USD")
-    ax.set_title("Acquired Podcast Portfolio Backtest")
-    ax.legend()
-    fig.autofmt_xdate()
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"${v/1000:,.0f}k"))
+    ax.grid(axis="y", color=GRID, lw=1); ax.set_axisbelow(True)
+    for sp in ("top", "right", "left"): ax.spines[sp].set_visible(False)
+    ax.spines["bottom"].set_color(GRID); ax.tick_params(colors=MUTED, length=0)
+    ax.set_title("THE ACQUIRED PORTFOLIO VS. THE S&P 500", loc="left", color=INK, fontsize=13, fontweight="bold", pad=18)
+    ax.text(0, 1.02, "One share of every company covered, bought on air date, Oct 2015 onward. "
+            "Same dollars into the S&P 500 total return index on the same dates.",
+            transform=ax.transAxes, color=MUTED, fontsize=8.5)
+    leg = ax.legend(loc="upper left", frameon=False, fontsize=9, labelcolor=INK)
     fig.tight_layout()
-    fig.savefig(path, dpi=150)
+    fig.savefig(path, dpi=160, facecolor=BG)
 
 
 def main():
