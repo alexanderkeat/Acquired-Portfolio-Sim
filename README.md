@@ -17,7 +17,7 @@ This project answers a simple question. If you had bought one share of every pub
 | Multiple | 4.27x | 2.98x |
 | Annual return | 20.5% | 15.4% |
 
-As of the 11 September 2026 close. The annual return is money-weighted, meaning it accounts for the fact that cash went in gradually over eleven years rather than all at once.
+As of the 11 September 2026 close, refreshed weekly. The annual return is money-weighted, meaning it accounts for the fact that cash went in gradually over eleven years rather than all at once.
 
 Of 169 main-feed episodes, 114 produced a purchase. The other 55 were about private companies like SpaceX, Stripe, and Epic Games, or were not about a company at all.
 
