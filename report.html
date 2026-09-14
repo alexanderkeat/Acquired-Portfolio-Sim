@@ -1,0 +1,549 @@
+<title>Acquired Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#fffcf5; --surface:#fffef9; --surface-2:#f5eeda; --raised:#ffffff;
+  --ink:#1b1915; --ink-soft:#4a4436; --muted:#8c8574; --line:#e6ddc7; --line-soft:#efe8d6;
+  --accent:#0e7d61; --accent-bright:#17cb9f; --accent-glow:#28f1c0; --accent-soft:#e3f6ee; --on-accent:#0d1210;
+  --gold:#7a5f28; --gold-bright:#c4a355;
+  --pos:#136843; --pos-soft:#e2f3ea; --neg:#b6402f; --neg-soft:#f9e8e3;
+  --s-portfolio:var(--accent); --s-invested:var(--muted); --s-benchmark:var(--gold);
+  --shadow: 0 1px 2px rgba(27,25,21,.03), 0 10px 26px -16px rgba(27,25,21,.12);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#1b1915; --surface:#211e18; --surface-2:#282320; --raised:#2a2620;
+    --ink:#fffcf5; --ink-soft:#ddd6c4; --muted:#9b9484; --line:#3a3527; --line-soft:#2e2a20;
+    --accent:#28f1c0; --accent-bright:#28f1c0; --accent-glow:#28f1c0; --accent-soft:#173832; --on-accent:#0d1210;
+    --gold:#d4af63; --gold-bright:#d4af63;
+    --pos:#3ecf9a; --pos-soft:#173629; --neg:#e2685c; --neg-soft:#3a1f1c;
+    --s-portfolio:var(--accent); --s-invested:var(--muted); --s-benchmark:var(--gold);
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 14px 32px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#1b1915; --surface:#211e18; --surface-2:#282320; --raised:#2a2620;
+  --ink:#fffcf5; --ink-soft:#ddd6c4; --muted:#9b9484; --line:#3a3527; --line-soft:#2e2a20;
+  --accent:#28f1c0; --accent-bright:#28f1c0; --accent-glow:#28f1c0; --accent-soft:#173832; --on-accent:#0d1210;
+  --gold:#d4af63; --gold-bright:#d4af63;
+  --pos:#3ecf9a; --pos-soft:#173629; --neg:#e2685c; --neg-soft:#3a1f1c;
+  --s-portfolio:var(--accent); --s-invested:var(--muted); --s-benchmark:var(--gold);
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 14px 32px -16px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Inter", system-ui, sans-serif;
+  font-size:15px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--accent-soft); }
+.wrap{ max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+h1,h2,h3{
+  font-family:"Oswald","Arial Narrow",sans-serif; text-transform:uppercase; letter-spacing:.03em;
+  text-wrap:balance; margin:0; font-weight:600;
+}
+.mono{ font-family:"JetBrains Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+a{ color:var(--accent); }
+a:hover{ color:var(--gold); }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+/* ---------- Wordmark / masthead ---------- */
+.wordmark{ display:flex; align-items:baseline; gap:10px; margin-bottom:22px; }
+.wordmark .word{
+  font-family:"Oswald",sans-serif; font-weight:600; font-size:19px; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--ink);
+}
+.wordmark .word::after{ content:"\25CF"; color:var(--accent-glow); font-size:9px; vertical-align:.35em; margin-left:6px; }
+.wordmark .tag{
+  font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:.04em; color:var(--muted);
+  border-left:1px solid var(--line); padding-left:10px;
+}
+.fan-notice{
+  font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:.01em; color:var(--muted);
+  margin:0 0 26px;
+}
+
+/* ---------- Header ---------- */
+.eyebrow{
+  font-family:"JetBrains Mono", monospace; font-size:11.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 10px;
+}
+header h1{ font-size:clamp(30px,4.6vw,46px); letter-spacing:.01em; }
+.premise{
+  margin-top:18px; max-width:640px; font-size:18px; line-height:1.6; color:var(--ink-soft);
+  font-family:"Fraunces",Georgia,serif; font-style:italic; font-weight:400;
+}
+.premise em{ font-style:italic; font-weight:500; color:var(--ink); }
+.asof{ margin-top:14px; font-family:"JetBrains Mono",monospace; font-size:12.5px; color:var(--muted); }
+
+/* ---------- Hero stat grid ---------- */
+.hero{
+  margin-top:36px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.tile{ background:var(--surface); padding:22px 20px; display:flex; flex-direction:column; gap:6px; }
+.tile .label{ font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.tile .value{ font-family:"JetBrains Mono",monospace; font-size:26px; font-weight:500; font-variant-numeric:tabular-nums; }
+.tile .sub{ font-size:12.5px; color:var(--muted); font-family:"JetBrains Mono",monospace; }
+.tile .delta{ font-weight:600; }
+.tile.accent{ background:var(--accent-soft); }
+.tile.accent .value{ color:var(--accent); }
+.pos{ color:var(--pos); } .neg{ color:var(--neg); }
+
+@media (max-width:760px){ .hero{ grid-template-columns:repeat(2,1fr); } }
+
+/* ---------- Section shell ---------- */
+section{ margin-top:64px; }
+.section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+.section-head h2{ font-size:21px; }
+.section-head .note{ font-size:12.5px; font-family:"JetBrains Mono",monospace; color:var(--muted); text-transform:none; letter-spacing:0; }
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; box-shadow:var(--shadow); }
+
+/* ---------- Chart ---------- */
+.chart-card{ padding:20px 22px 8px; }
+.chart-top{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:6px; }
+.legend{ display:flex; gap:18px; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); }
+.legend .item{ display:flex; align-items:center; gap:7px; }
+.legend .swatch{ width:14px; height:3px; border-radius:2px; display:inline-block; }
+.legend .swatch.dashed{ background:none; border-top:2px dashed var(--s-invested); width:14px; height:0; }
+.scale-toggle{ display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; font-family:"JetBrains Mono",monospace; font-size:12px; }
+.scale-toggle button{ border:0; background:var(--surface); color:var(--ink-soft); padding:7px 16px; cursor:pointer; }
+.scale-toggle button.active{ background:var(--accent-bright); color:var(--on-accent); }
+.chart-wrap{ position:relative; }
+#chartSvg{ width:100%; height:auto; display:block; }
+.chart-tip{
+  position:absolute; pointer-events:none; background:var(--raised); border:1px solid var(--line);
+  border-radius:6px; padding:8px 11px; font-size:12px; box-shadow:var(--shadow); white-space:nowrap;
+  transform:translate(-50%,-115%); opacity:0; transition:opacity .08s;
+}
+.chart-tip.show{ opacity:1; }
+.chart-tip .t-date{ font-family:"JetBrains Mono",monospace; color:var(--muted); margin-bottom:4px; }
+.chart-tip .row{ display:flex; gap:8px; justify-content:space-between; }
+.chart-tip .row + .row{ margin-top:2px; }
+.axis text{ fill:var(--muted); font-family:"JetBrains Mono",monospace; font-size:10.5px; }
+.gridline{ stroke:var(--line-soft); stroke-width:1; }
+.endlabel{ font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:600; }
+
+/* ---------- Rankings ---------- */
+.rank-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media (max-width:760px){ .rank-grid{ grid-template-columns:1fr; } }
+.rank-card{ padding:20px 22px 22px; }
+.rank-card h3{ font-size:15px; margin-bottom:2px; }
+.rank-card .cap{ font-size:12px; color:var(--muted); margin-bottom:14px; }
+.rank-row{ display:grid; grid-template-columns:20px 1fr auto; align-items:center; gap:10px; padding:5px 0; }
+.rank-row .n{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); }
+.rank-row .name{ font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rank-row .name .tk{ color:var(--muted); font-family:"JetBrains Mono",monospace; font-size:11.5px; }
+.rank-row .bar-wrap{ position:relative; height:16px; }
+.rank-row .bar{ position:absolute; top:0; height:16px; border-radius:3px; }
+.rank-row .val{ font-family:"JetBrains Mono",monospace; font-size:12.5px; font-weight:600; min-width:76px; text-align:right; }
+.rank-two{ display:grid; grid-template-columns:1fr; gap:2px; }
+.rank-divider{ border:0; border-top:1px dashed var(--line); margin:12px 0; }
+
+/* ---------- Table ---------- */
+.table-scroll{ overflow-x:auto; border-radius:6px; }
+table{ border-collapse:collapse; width:100%; min-width:920px; font-size:13px; }
+thead th{
+  position:sticky; top:0; background:var(--surface-2); text-align:left; padding:10px 12px;
+  font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted);
+  cursor:pointer; user-select:none; white-space:nowrap; border-bottom:1px solid var(--line);
+}
+thead th:hover{ color:var(--ink); }
+thead th.sorted{ color:var(--accent); }
+thead th .arrow{ margin-left:4px; opacity:.7; }
+tbody td{ padding:8px 12px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+tbody tr.skipped{ color:var(--muted); }
+tbody tr.skipped td{ font-style:italic; }
+tbody tr:hover td{ background:var(--surface-2); }
+td.num{ font-family:"JetBrains Mono",monospace; text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.ticker{ font-family:"JetBrains Mono",monospace; }
+.badge{ display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:2px 8px 2px 6px; border-radius:99px; background:var(--surface-2); }
+.badge .dot{ width:6px; height:6px; border-radius:50%; }
+.badge.public .dot{ background:var(--s-portfolio); }
+.badge.parent .dot{ background:var(--s-benchmark); }
+.badge.skipped .dot{ background:var(--muted); }
+.manual-tag{ font-size:10.5px; color:var(--accent); border:1px solid var(--accent); border-radius:5px; padding:0 5px; margin-left:6px; }
+.reason{ max-width:340px; }
+
+/* ---------- Methodology ---------- */
+.method-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+@media (max-width:760px){ .method-grid{ grid-template-columns:1fr; } }
+.method-grid h3{ font-size:13px; color:var(--ink-soft); margin-bottom:10px; }
+.method-grid ul{ margin:0; padding-left:18px; font-size:13.5px; color:var(--ink-soft); line-height:1.7; font-family:"Fraunces",Georgia,serif; }
+.method-grid li{ margin-bottom:6px; }
+footer{
+  margin-top:56px; padding:22px 24px; background:var(--surface-2); border-radius:6px;
+  font-size:12px; color:var(--muted); display:flex; flex-direction:column; gap:6px;
+}
+footer strong{ color:var(--ink-soft); }
+footer .fan-notice{ margin:0; }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="wordmark"><span class="word">Acquired</span><span class="tag">/ portfolio</span></div>
+  <p class="fan-notice">An unofficial fan project. Not affiliated with or endorsed by Acquired.</p>
+  <p class="eyebrow">A backtest &middot; not investment advice</p>
+  <h1>The Acquired Portfolio</h1>
+  <p class="premise">Every episode of <em>Acquired</em> opens with the same disclaimer: "this is not investment advice." What if it were? Starting in October 2015, we bought one share of every publicly traded company the main feed has covered &mdash; at the close, on the day the episode aired &mdash; and held.</p>
+  <p class="asof">As of 2026-09-11 &middot; 169 main-feed episodes reviewed</p>
+</header>
+
+<div class="hero">
+  <div class="tile accent">
+    <span class="label">Total invested</span>
+    <span class="value mono">$24,130.00</span>
+    <span class="sub">114 buys, one share each</span>
+  </div>
+  <div class="tile accent">
+    <span class="label">Portfolio value today</span>
+    <span class="value mono">$102,976.93</span>
+    <span class="sub delta pos">4.27&times; &middot; +$78,846.93</span>
+  </div>
+  <div class="tile">
+    <span class="label">vs. S&amp;P 500 (same $, same dates)</span>
+    <span class="value mono">$71,859.79</span>
+    <span class="sub delta">2.98&times; &middot; portfolio +$31,117 ahead</span>
+  </div>
+  <div class="tile">
+    <span class="label">XIRR (money-weighted)</span>
+    <span class="value mono">20.5%</span>
+    <span class="sub">vs. 15.4% for the S&amp;P 500 TR</span>
+  </div>
+</div>
+
+<section id="chart-section">
+  <div class="section-head">
+    <h2>Portfolio vs. the index</h2>
+    <span class="note">Weekly, since first episode (Oct 15, 2015)</span>
+  </div>
+  <div class="card chart-card">
+    <div class="chart-top">
+      <div class="legend">
+        <span class="item"><span class="swatch" style="background:var(--s-portfolio)"></span>Acquired portfolio</span>
+        <span class="item"><span class="swatch" style="background:var(--s-benchmark)"></span>S&amp;P 500 TR, same dollars</span>
+        <span class="item"><span class="swatch dashed"></span>Cumulative invested</span>
+      </div>
+      <div class="scale-toggle">
+        <button id="btnLinear" class="active">Linear</button>
+        <button id="btnLog">Log</button>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <svg id="chartSvg" viewBox="0 0 980 400" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="chart-tip" id="chartTip"></div>
+    </div>
+  </div>
+</section>
+
+<section id="rankings-section">
+  <div class="section-head">
+    <h2>Best and worst bets</h2>
+    <span class="note">One share each &middot; bought episodes only</span>
+  </div>
+  <div class="rank-grid">
+    <div class="card rank-card">
+      <h3>By dollar gain</h3>
+      <p class="cap">Value of the one share today, minus what it cost</p>
+      <div id="rankGainTop" class="rank-two"></div>
+      <hr class="rank-divider">
+      <div id="rankGainBot" class="rank-two"></div>
+    </div>
+    <div class="card rank-card">
+      <h3>By percent return</h3>
+      <p class="cap">Where a low buy price can make a modest gain look huge</p>
+      <div id="rankRetTop" class="rank-two"></div>
+      <hr class="rank-divider">
+      <div id="rankRetBot" class="rank-two"></div>
+    </div>
+  </div>
+</section>
+
+<section id="table-section">
+  <div class="section-head">
+    <h2>All 169 episodes</h2>
+    <span class="note">Click a column to sort &middot; skipped rows greyed with reason</span>
+  </div>
+  <div class="card table-scroll">
+    <table id="epTable">
+      <thead>
+        <tr>
+          <th data-key="0" data-type="num">Ep</th>
+          <th data-key="1" data-type="str">Title</th>
+          <th data-key="2" data-type="str">Air date</th>
+          <th data-key="3" data-type="str">Subject</th>
+          <th data-key="4" data-type="str">Ticker</th>
+          <th data-key="5" data-type="str">Status</th>
+          <th data-key="6" data-type="num">Buy price</th>
+          <th data-key="7" data-type="num">Value today</th>
+          <th data-key="8" data-type="num">Return %</th>
+          <th data-key="9" data-type="num">Gain $</th>
+          <th data-key="11" data-type="str">Flag / reason</th>
+        </tr>
+      </thead>
+      <tbody id="epTbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="method-section">
+  <div class="section-head"><h2>Methodology</h2></div>
+  <div class="card" style="padding:26px 28px;">
+    <div class="method-grid">
+      <div>
+        <h3>Rules of the backtest</h3>
+        <ul>
+          <li>Main feed only &mdash; no ACQ2, Arena Show, or specials.</li>
+          <li>One share, bought at the close on the air date; weekend/holiday air dates buy at the next close.</li>
+          <li>Multi-part series count each part as its own episode and buy again.</li>
+          <li>Public subject &rarr; buy the subject's ticker. Already-acquired subject &rarr; buy the public parent, and sell on any later divestiture.</li>
+          <li>Private subject with no public parent &rarr; skipped, but counted and reported.</li>
+          <li>Non-US subjects &rarr; a US ADR where one exists, otherwise the primary listing converted to USD.</li>
+          <li>Dividends reinvested (total return) and splits tracked; cash buyouts move to cash at the deal price, held at 0% thereafter; stock buyouts convert at the exchange ratio.</li>
+          <li>Benchmark is the same dollars, on the same dates, into the S&amp;P 500 total return index. Metric is money-weighted XIRR. No transaction costs, taxes, or interest on cash.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Data caveats</h3>
+        <ul>
+          <li>9 delisted tickers &mdash; VA, LNKD, YHOO, WFM, ATVI, EA, WORK, EB, TWTR &mdash; are valued from hand-researched, sparse closing prices, linearly interpolated between known dates. Flagged "manual" in the table.</li>
+          <li>Cash from a buyout sits at 0% for the rest of the backtest &mdash; no money-market yield modeled.</li>
+          <li>One share means one share: results are dominated by whichever stock had the highest price on its air date &mdash; GOOGL pre-split (~$750&ndash;1,160), AMZN pre-split (~$650&ndash;1,330), BKNG (~$1,975). That's a share-count artifact, not a stock-picking signal.</li>
+          <li>No taxes, fees, or transaction costs modeled anywhere.</li>
+          <li>The Sony lot excludes the Sony Financial Group spin-off distributed to ADR holders in October 2025 (roughly 4% of that position). Hand-priced delisted tickers ignore dividends.</li>
+          <li>Independently reviewed: an adversarial pass re-verified all corporate actions, the delisted-ticker prices, the benchmark, and the XIRR, and caught a cost-basis bug that has since been fixed. Details in the project's review notes.</li>
+          <li>This is a backtest of a joke. Please do not buy one share of everything a podcast mentions. Not investment advice.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <span>Built from <strong>episodes.csv</strong>, <strong>results.csv</strong>, <strong>timeseries.csv</strong>, <strong>events.csv</strong> and <strong>rules.md</strong>. Figures as of 2026-09-11. Not investment advice &mdash; genuinely, not even a little.</span>
+    <p class="fan-notice">An unofficial fan project. Not affiliated with or endorsed by Acquired.</p>
+  </footer>
+</section>
+
+</div>
+
+<script>
+const DATA = {"episodes":[[1,"Pixar","2015-10-15","Pixar","DIS","parent",107.89,117.23,8.7,9.34,0,""],[2,"Instagram","2015-11-01","Instagram","META","parent",103.31,653.72,532.8,550.41,0,""],[3,"Twitch","2015-11-16","Twitch","AMZN","parent",647.81,5135.6,692.8,4487.79,0,""],[4,"Bungie (with Xbox Co-Founder Ed Fries)","2015-11-30","Bungie","","skipped",null,null,null,null,0,"independent private studio at air date, no public parent (Sony acquired Bungie in 2022,..."],[5,"Siri","2015-12-14","Siri","AAPL","parent",112.48,1477.7,1213.7,1365.22,0,""],[6,"Lucasfilm","2016-01-19","Lucasfilm","DIS","parent",93.97,116.48,24.0,22.51,0,""],[7,"YouTube","2016-02-03","YouTube","GOOGL","parent",749.38,6834.42,812.0,6085.04,0,""],[8,"Acompli, Sunrise, and Wunderlist (with Kurt DelBene)","2016-02-29","Acompli/Sunrise/Wunderlist","MSFT","parent",50.88,565.57,1011.6,514.69,0,""],[9,"Writely (Google Docs)","2016-03-29","Writely","GOOGL","parent",765.89,6834.42,792.4,6068.53,0,""],[10,"Virgin America","2016-04-26","Virgin America","VA","public",55.5,57.0,2.7,1.5,1,""],[11,"PayPal","2016-05-08","PayPal","PYPL","public",39.62,54.32,37.1,14.7,0,""],[12,"Snapchat","2016-05-22","Snapchat","","skipped",null,null,null,null,0,"Snapchat/Snap Inc. was private on air date, IPO not until March 2017"],[13,"Push Pop Press (Facebook Instant Articles) with Todd Bishop","2016-06-05","Push Pop Press","META","parent",118.79,653.72,450.3,534.93,0,""],[14,"LinkedIn","2016-06-16","LinkedIn","LNKD","public",192.5,196.0,1.8,3.5,1,""],[15,"ExactTarget (acquired by Salesforce) with Scott Dorsey","2016-07-05","ExactTarget","CRM","parent",78.67,252.01,220.3,173.34,0,""],[16,"Midroll + Stitcher (acquired by Scripps)","2016-07-12","Midroll/Stitcher","SSP","parent",17.73,10.6,-40.2,-7.13,0,""],[17,"Waze","2016-08-03","Waze","GOOGL","parent",798.92,6834.42,755.5,6035.5,0,""],[18,"Jet","2016-08-29","Jet.com","","skipped",null,null,null,null,0,"Walmart deal announced 2016-08-08 but did not close until 2016-09-19"],[19,"Android","2016-09-16","Android","GOOGL","parent",797.97,6834.42,756.5,6036.45,0,""],[20,"Inside the M&A Press with Bloomberg's Alex Sherman","2016-09-27","","","skipped",null,null,null,null,0,"episode is a discussion of M&A journalism, not about a specific company"],[21,"Zillow + Trulia (with Zillow Group CFO Kathleen Philips)","2016-10-13","Zillow","Z","public",32.06,32.5,1.4,0.44,0,""],[22,"NeXT (Live show at the GeekWire Summit)","2016-10-23","NeXT","AAPL","parent",117.65,1452.96,1135.0,1335.31,0,""],[23,"Skype","2016-11-01","Skype","MSFT","parent",59.8,558.16,833.4,498.36,0,""],[24,"The Facebook IPO","2016-11-11","Facebook","META","public",119.02,653.72,449.3,534.7,0,""],[25,"Marvel","2016-12-05","Marvel","DIS","parent",99.96,115.64,15.7,15.68,0,""],[26,"The Amazon IPO with original Amazon Board Member Tom Alberg","2016-12-31","Amazon","AMZN","public",753.67,5135.6,581.4,4381.93,0,""],[27,"P.A. Semi + AuthenTec","2017-01-24","P.A. Semi / AuthenTec","AAPL","parent",119.97,1445.53,1104.9,1325.56,0,""],[28,"The Uber - Didi Chuxing Merger with Brad Stone, author of The Upstarts & The Everything Store","2017-02-28","Uber / Didi Chuxing","","skipped",null,null,null,null,0,"both Uber and Didi Chuxing were private on air date (Uber IPO 2019), no public parent"],[29,"The Snap Inc. IPO","2017-03-04","Snap Inc.","SNAP","public",23.77,5.68,-76.1,-18.09,0,""],[30,"Overture (with the Internet History Podcast!)","2017-03-13","Overture Services","YHOO","parent",45.0,52.0,15.6,7.0,1,""],[31,"The Starbucks IPO with Dan Levitan","2017-04-03","Starbucks","SBUX","public",58.44,121.38,107.7,62.94,0,""],[32,"Oculus","2017-04-11","Oculus VR","META","parent",139.92,653.72,367.2,513.8,0,""],[33,"The LA Clippers","2017-04-23","LA Clippers","","skipped",null,null,null,null,0,"NBA team privately owned by Steve Ballmer since 2014, no public parent"],[34,"BAMTech, Disney and \"the Biggest Media Company You've Never Heard Of\u201d","2017-05-10","BAMTech","","skipped",null,null,null,null,0,"majority owned by MLB Advanced Media, a private league entity, so not yet acquired by a..."],[35,"SoundJam (iTunes)","2017-05-31","SoundJam MP","AAPL","parent",152.76,1433.38,838.3,1280.62,0,""],[36,"Whole Foods Market","2017-06-20","Whole Foods Market","WFM","public",43.6,42.0,-3.7,-1.6,1,""],[37,"Activision Blizzard","2017-07-12","Activision Blizzard","ATVI","public",61.02,95.0,55.7,33.98,1,""],[38,"Booking.com with Jetsetter & Room 77 CEO Drew Patterson","2017-07-25","Booking.com","BKNG","parent",2016.91,4451.08,120.7,2434.17,0,""],[39,"Opsware (with Michel Feaster)","2017-08-04","Opsware","HPE","parent",17.51,18.45,5.3,0.94,0,""],[40,"The Square IPO","2017-08-16","Square Inc.","XYZ","public",24.99,79.21,217.0,54.22,0,""],[41,"AOL and Time Warner (with the Internet History Podcast)","2017-09-17","AOL","VZ","parent",48.09,65.45,36.1,17.36,0,""],[42,"HTC, Google and the Future of Mobile","2017-09-21","HTC Corporation","2498.TW","public",2.3,1.29,-43.9,-1.01,0,""],[43,"Blue Bottle Coffee","2017-10-07","Blue Bottle Coffee","","skipped",null,null,null,null,0,"REVIEW: Nestle deal announced 2017-09-14 but closed late Oct 2017, after air date ->..."],[44,"The Atlassian IPO","2017-11-06","Atlassian","TEAM","public",52.06,179.7,245.2,127.64,0,""],[45,"Qualcomm - Broadcom","2017-11-20","Qualcomm","QCOM","public",66.47,229.48,245.2,163.01,0,""],[46,"The Stitch Fix IPO","2017-12-04","Stitch Fix","SFIX","public",24.04,2.95,-87.7,-21.09,0,""],[47,"Apple - Beats","2017-12-11","Beats Electronics","AAPL","parent",172.67,1422.66,723.9,1249.99,0,""],[48,"Zappos (with Alfred Lin)","2018-01-22","Zappos","AMZN","parent",1327.31,5135.6,286.9,3808.29,0,""],[49,"Raising a Seed Round with Against Gravity CEO Nick Fajt","2018-02-06","Against Gravity","","skipped",null,null,null,null,0,"subject company (later Rec Room Inc) private, no public parent"],[50,"Nest","2018-02-19","Nest Labs","GOOGL","parent",1103.59,6834.42,519.3,5730.83,0,""],[51,"SoftBank, Fortress and the Vision Fund","2018-03-22","SoftBank","SFTBY","public",39.35,174.15,342.6,134.8,0,""],[52,"The Dropbox IPO","2018-03-25","Dropbox","DBX","public",30.45,35.56,16.8,5.11,0,""],[53,"Spotify\u2019s Direct Listing","2018-04-05","Spotify","SPOT","public",143.99,525.75,265.1,381.76,0,""],[54,"PowerPoint","2018-05-04","PowerPoint (Forethought)","MSFT","parent",95.16,539.77,467.2,444.61,0,""],[55,"T-Mobile / Sprint","2018-05-21","T-Mobile","TMUS","public",57.19,191.76,235.3,134.57,0,""],[56,"GitHub","2018-06-05","GitHub","","skipped",null,null,null,null,0,"Microsoft-GitHub deal announced 2018-06-04 but did not close until 2018-10-26, so GitHub..."],[57,"The Rover-DogVacay Merger (with Rover CEO Aaron Easterly)","2018-06-17","Rover","","skipped",null,null,null,null,0,"Rover and DogVacay both private companies, no public parent"],[58,"Tesla","2018-07-16","Tesla","TSLA","public",310.1,5481.6,1667.7,5171.5,0,""],[59,"The Xiaomi IPO","2018-08-05","Xiaomi","1810.HK","public",2.19,3.36,53.2,1.17,0,""],[60,"The Sonos IPO","2018-08-20","Sonos","SONO","public",19.42,15.12,-22.1,-4.3,0,""],[61,"Recode (with Kara Swisher)","2018-09-10","Recode","","skipped",null,null,null,null,0,"Recode merged into Vox Media in 2015, Vox Media is private, no public parent"],[62,"Alibaba","2018-09-23","Alibaba","BABA","public",163.16,116.15,-28.8,-47.01,0,""],[63,"Behance (with Scott Belsky)","2018-10-01","Behance","ADBE","parent",275.49,252.23,-8.4,-23.26,0,""],[64,"Venmo (live with Andrew Kortina)","2018-10-29","Venmo","PYPL","parent",81.15,54.32,-33.1,-26.83,0,""],[65,"Netflix (Part 1)","2018-11-11","Netflix","NFLX","public",294.07,774.0,163.2,479.93,0,""],[66,"Netflix (Part 2)","2018-11-25","Netflix","NFLX","public",261.43,774.0,196.1,512.57,0,""],[67,"Tencent","2018-12-16","Tencent","TCEHY","public",38.26,61.64,61.1,23.38,0,""],[68,"ESPN","2019-01-21","ESPN","DIS","parent",110.6,111.24,0.6,0.64,0,""],[69,"ARM & SoftBank","2019-02-03","ARM Holdings","SFTBY","parent",38.53,174.15,352.0,135.62,0,""],[70,"Instagram Revisited (with Emily White)","2019-02-25","Instagram","META","parent",164.62,653.72,297.1,489.1,0,""],[71,"The Lyft IPO","2019-03-30","Lyft","LYFT","public",69.01,15.32,-77.8,-53.69,0,""],[72,"The Pinterest IPO","2019-04-23","Pinterest","PINS","public",25.85,19.05,-26.3,-6.8,0,""],[73,"The Uber IPO","2019-05-11","Uber","UBER","public",37.1,71.67,93.2,34.57,0,""],[74,"The Electronic Arts IPO (with Trip Hawkins)","2019-05-27","Electronic Arts","EA","public",93.5,210.0,124.6,116.5,1,""],[75,"The Zoom IPO (with Santi Subotovsky)","2019-06-18","Zoom","ZM","public",99.64,95.57,-4.1,-4.07,0,""],[76,"The Slack DPO","2019-06-24","Slack","WORK","public",37.0,46.35,25.3,9.35,1,""],[77,"Superhuman (with CEO Rahul Vohra)","2019-06-27","Superhuman","","skipped",null,null,null,null,0,"private email startup, never went public"],[78,"Huawei","2019-07-22","Huawei","","skipped",null,null,null,null,0,"privately/employee-owned, no public listing"],[79,"The Shopify IPO","2019-08-06","Shopify","SHOP","public",332.67,1287.9,287.1,955.23,0,""],[80,"Google Maps","2019-08-26","Google","GOOGL","public",1171.18,6834.42,483.6,5663.24,0,""],[81,"Sequoia Capital (Part 1)","2019-09-26","Sequoia Capital","","skipped",null,null,null,null,0,"private VC partnership, no public stock"],[82,"Atari (with Nolan Bushnell)","2019-10-15","Atari","ALATA.PA","public",0.29,0.11,-60.9,-0.18,0,""],[83,"The WeWork \u201cAcquisition\u201d (with Dan Primack)","2019-10-24","WeWork","","skipped",null,null,null,null,0,"REVIEW: SoftBank never controlled WeWork at air date -> skipped"],[84,"Disney, Plus","2019-11-25","Disney","DIS","public",149.69,110.55,-26.1,-39.14,0,""],[85,"TikTok","2019-12-08","TikTok","","skipped",null,null,null,null,0,"owned by ByteDance, private, no public parent"],[86,"Convoy (with CEO Dan Lewis)","2019-12-19","Convoy","","skipped",null,null,null,null,0,"private freight startup, shut down 2023, never public"],[87,"The Lean Startup and the Long-Term Stock Exchange (with Eric Ries)","2019-12-29","Long-Term Stock Exchange","","skipped",null,null,null,null,0,"episode about a methodology/private exchange operator, no public stock"],[88,"WhatsApp","2020-01-28","WhatsApp","META","parent",217.79,653.72,200.2,435.93,0,""],[89,"Sequoia Capital Part II (with Doug Leone)","2020-02-17","Sequoia Capital","","skipped",null,null,null,null,0,"private VC partnership, no public stock"],[90,"The Top 10 Acquisitions of All-Time","2020-03-17","","","skipped",null,null,null,null,0,"list/retrospective episode, not about one company"],[91,"Adapting Episode 1: Canlis","2020-03-20","Canlis","","skipped",null,null,null,null,0,"private Seattle restaurant, no public listing"],[92,"Adapting Episode 2: Sequoia\u2019s Black Swan Memo (with Roelof Botha)","2020-03-30","Sequoia Capital","","skipped",null,null,null,null,0,"private VC partnership, no public stock"],[93,"Adapting Episode 3: Intel","2020-05-11","Intel","INTC","public",60.13,115.48,92.0,55.35,0,""],[94,"SpaceX","2020-05-26","SpaceX","","skipped",null,null,null,null,0,"privately held, no public listing as of 2026-09-04"],[95,"Oprah (Harpo Studios)","2020-06-25","Harpo Studios","","skipped",null,null,null,null,0,"privately held production company / episode about a person"],[96,"Pinduoduo","2020-07-16","Pinduoduo","PDD","public",83.55,77.81,-6.9,-5.74,0,""],[97,"Eventbrite (with Julia & Kevin Hartz)","2020-08-25","Eventbrite","EB","public",10.3,4.5,-56.3,-5.8,1,""],[98,"Epic Games","2020-09-01","Epic Games","","skipped",null,null,null,null,0,"privately held (Tencent minority stake only), no public listing"],[99,"The NBA","2020-09-30","","","skipped",null,null,null,null,0,"episode about a sports league, not a single company"],[100,"Twitter (with Dick Costolo)","2020-10-28","Twitter","TWTR","public",48.53,54.2,11.7,5.67,1,""],[101,"Virgin Galactic","2020-11-22","Virgin Galactic","SPCE","public",24.91,0.15,-99.4,-24.76,0,""],[102,"DoorDash","2020-12-09","DoorDash","DASH","public",189.51,201.95,6.6,12.44,0,""],[103,"Airbnb","2020-12-10","Airbnb","ABNB","public",144.71,170.19,17.6,25.48,0,""],[104,"Bitcoin","2021-01-18","","","skipped",null,null,null,null,0,"episode is about a cryptocurrency asset, not a company"],[105,"The New York Times Company","2021-02-17","New York Times","NYT","public",49.68,70.74,42.4,21.06,0,""],[106,"Meituan","2021-03-10","Meituan","MPNGY","public",80.93,19.05,-76.5,-61.88,0,""],[107,"Rec Room Part II (with CEO Nick Fajt)","2021-03-23","Rec Room","","skipped",null,null,null,null,0,"Rec Room is privately held, no public parent"],[108,"Berkshire Hathaway Part I","2021-04-20","Berkshire Hathaway","BRK-B","public",267.89,510.37,90.5,242.48,0,""],[109,"Berkshire Hathaway Part II","2021-05-12","Berkshire Hathaway","BRK-B","public",282.91,510.37,80.4,227.46,0,""],[110,"Berkshire Hathaway Part III","2021-06-06","Berkshire Hathaway","BRK-B","public",289.46,510.37,76.3,220.91,0,""],[111,"Ethereum","2021-07-05","","","skipped",null,null,null,null,0,"episode is about a cryptocurrency network, not a company"],[112,"Andreessen Horowitz Part I","2021-07-26","","","skipped",null,null,null,null,0,"a16z is a privately held venture capital firm, no public parent"],[113,"Andreessen Horowitz Part II","2021-08-09","","","skipped",null,null,null,null,0,"same subject as Part I, privately held"],[114,"TSMC","2021-09-06","TSMC","TSM","public",124.7,469.99,276.9,345.29,0,""],[115,"Standard Oil Part I","2021-09-21","","","skipped",null,null,null,null,0,"Standard Oil was broken up by antitrust action in 1911, no single surviving public entity..."],[116,"Standard Oil Part II","2021-10-18","","","skipped",null,null,null,null,0,"same subject as Part I, dissolved 1911, no single successor"],[117,"Not Boring (with Packy McCormick)","2021-12-02","","","skipped",null,null,null,null,0,"episode is about a newsletter/writer (Packy McCormick), not a company"],[118,"FTX (with Sam Bankman-Fried & Mario Gabriele)","2021-12-14","","","skipped",null,null,null,null,0,"FTX was privately held at air date, no public parent (collapsed Nov 2022 while still..."],[119,"CAA (with Michael Ovitz)","2021-12-21","","","skipped",null,null,null,null,0,"Creative Artists Agency is privately held, no public parent"],[120,"Taylor Swift (Acquired\u2019s Version)","2022-01-23","","","skipped",null,null,null,null,0,"episode is about a person/artist, not a company"],[121,"Peloton","2022-02-10","Peloton","PTON","public",37.46,4.95,-86.8,-32.51,0,""],[122,"SONY","2022-03-07","Sony","SONY","public",95.82,122.22,27.6,26.4,0,""],[123,"Altimeter (with Brad Gerstner)","2022-03-14","","","skipped",null,null,null,null,0,"Altimeter Capital is a privately held hedge/VC fund, no public parent"],[124,"Nvidia Part I: The GPU Company (1993-2006)","2022-03-27","Nvidia","NVDA","public",282.19,2191.87,676.7,1909.68,0,""],[125,"Nvidia Part II: The Machine Learning Company (2006-2022)","2022-04-20","Nvidia","NVDA","public",214.82,2191.87,920.3,1977.05,0,""],[126,"Walmart","2022-07-18","Walmart","WMT","public",128.77,338.28,162.7,209.51,0,""],[127,"Amazon.com","2022-08-16","Amazon","AMZN","public",144.78,256.78,77.4,112.0,0,""],[128,"Amazon Web Services","2022-09-05","Amazon","AMZN","public",126.11,256.78,103.6,130.67,0,""],[129,"Benchmark Part I","2022-09-27","Benchmark","","skipped",null,null,null,null,0,"Benchmark is a private VC partnership, no public ticker or parent"],[130,"Benchmark Part II: The Dinner","2022-10-17","Benchmark","","skipped",null,null,null,null,0,"Benchmark is a private VC partnership, no public ticker or parent"],[131,"Qualcomm","2022-11-14","Qualcomm","QCOM","public",120.8,199.1,64.8,78.3,0,""],[132,"Enron","2022-11-28","Enron","","skipped",null,null,null,null,0,"Enron collapsed and was delisted in 2001, no tradable ticker on 2022 air date"],[133,"Stratechery (with Ben Thompson)","2022-12-05","Stratechery","","skipped",null,null,null,null,0,"Stratechery is Ben Thompson's private newsletter business, not a public company"],[134,"LVMH","2023-02-21","LVMH","LVMUY","public",171.41,102.56,-40.2,-68.85,0,""],[135,"Nintendo's Origins","2023-03-15","Nintendo","NTDOY","public",9.4,13.39,42.4,3.99,0,""],[136,"Nintendo: The Console Wars","2023-04-11","Nintendo","NTDOY","public",10.1,13.39,32.5,3.29,0,""],[137,"Lockheed Martin","2023-05-29","Lockheed Martin","LMT","public",447.97,575.46,28.5,127.49,0,""],[138,"Porsche (with Doug DeMuro)","2023-06-26","Porsche","P911.DE","public",118.72,58.34,-50.9,-60.38,0,""],[139,"Nike","2023-07-24","Nike","NKE","public",108.77,39.59,-63.6,-69.18,0,""],[140,"Costco","2023-08-21","Costco","COST","public",543.21,943.24,73.6,400.03,0,""],[141,"Nvidia Part III: The Dawn of the AI Era (2022-2023)","2023-09-05","Nvidia","NVDA","public",485.48,2189.6,351.0,1704.12,0,""],[142,"Visa","2023-11-26","Visa","V","public",254.14,378.19,48.8,124.05,0,""],[143,"Novo Nordisk (Ozempic)","2024-01-21","Novo Nordisk","NVO","public",105.49,46.98,-55.5,-58.51,0,""],[144,"Herm\u00e8s","2024-02-19","Herm\u00e8s","HESAY","public",239.87,166.68,-30.5,-73.19,0,""],[145,"Renaissance Technologies","2024-03-17","Renaissance Technologies","","skipped",null,null,null,null,0,"Renaissance Technologies is a private hedge fund, no public ticker or parent"],[146,"Microsoft Volume I","2024-04-21","Microsoft","MSFT","public",400.96,505.28,26.0,104.32,0,""],[147,"Starbucks (with Howard Schultz)","2024-06-03","Starbucks","SBUX","public",82.08,104.47,27.3,22.39,0,""],[148,"Microsoft Volume II","2024-07-21","Microsoft","MSFT","public",442.94,504.37,13.9,61.43,0,""],[149,"Acquired LIVE from Chase Center (with Daniel Ek, Emily Chang, Jensen Huang and Mark Zuckerberg)","2024-09-29","","","skipped",null,null,null,null,0,"Live panel/event episode not about a single company, no subject to buy"],[150,"Meta","2024-10-27","Meta","META","public",578.16,651.76,12.7,73.6,0,""],[151,"IKEA","2024-11-17","IKEA","","skipped",null,null,null,null,0,"private, owned by INGKA/Interogo foundations (nonprofit structure), no public parent"],[152,"Mars Inc. (the chocolate story)","2024-12-15","Mars Inc.","","skipped",null,null,null,null,0,"privately held by the Mars family, no public parent"],[153,"TSMC Founder Morris Chang","2025-01-26","TSMC","TSM","public",192.31,441.35,129.5,249.04,0,""],[154,"Rolex","2025-02-24","Rolex","","skipped",null,null,null,null,0,"owned by Hans Wilsdorf Foundation (private charitable trust), no public parent"],[155,"Indian Premier League Cricket","2025-03-23","Indian Premier League","","skipped",null,null,null,null,0,"not a company/stock"],[156,"Epic Systems (MyChart)","2025-04-20","Epic Systems","","skipped",null,null,null,null,0,"privately held, majority owned by founder Judy Faulkner, never IPO'd, no public parent"],[157,"The Steve Ballmer Interview","2025-06-01","","","skipped",null,null,null,null,0,"interview with a person, not about a specific company"],[158,"Google Part I: Origins of Search","2025-06-29","Google","GOOGL","parent",176.23,339.68,92.8,163.45,0,""],[159,"The Jamie Dimon Interview","2025-07-16","","","skipped",null,null,null,null,0,"interview with a person, not about a specific company"],[160,"Google Part II: Alphabet","2025-08-26","Alphabet","GOOGL","public",207.14,339.68,64.0,132.54,0,""],[161,"Google Part III: The AI Company","2025-10-05","Alphabet","GOOGL","public",250.43,339.38,35.5,88.95,0,""],[162,"Trader Joe's","2025-10-26","Trader Joe's","","skipped",null,null,null,null,0,"privately owned by Aldi Nord family foundations (Albrecht family), no public parent"],[163,"Coca-Cola","2025-11-23","Coca-Cola","KO","public",72.59,90.1,24.1,17.51,0,""],[164,"10 Years of Acquired (with Michael Lewis)","2025-12-14","","","skipped",null,null,null,null,0,"retrospective/interview episode, not about a single company"],[165,"Formula 1","2026-03-02","Formula 1","FWONK","parent",91.09,95.59,4.9,4.5,0,""],[166,"Ferrari","2026-04-12","Ferrari","RACE","public",355.14,418.56,17.9,63.42,0,""],[167,"Vanguard","2026-05-17","Vanguard","","skipped",null,null,null,null,0,"Vanguard is owned by its funds/investors (mutual structure), not publicly traded, no..."],[168,"The Walt Disney Company","2026-06-21","Walt Disney Company","DIS","public",102.45,107.37,4.8,4.92,0,""],[169,"Disney: The Renaissance and the Empire","2026-08-09","Walt Disney Company","DIS","public",103.18,106.55,3.3,3.37,0,""]],"weekly":[["2015-10-16",107.89,108.24,108.38],["2015-10-23",107.89,113.09,110.65],["2015-10-30",107.89,113.74,110.89],["2015-11-06",211.2,222.77,215.17],["2015-11-13",211.2,218.79,207.51],["2015-11-20",859.01,895.84,873.91],["2015-11-27",859.01,893.84,874.65],["2015-12-04",859.01,893.06,875.68],["2015-12-11",859.01,851.0,842.89],["2015-12-18",971.49,982.62,951.9],["2015-12-25",971.49,982.38,978.51],["2016-01-01",971.49,991.56,970.71],["2016-01-08",971.49,901.23,913.38],["2016-01-15",971.49,856.78,893.72],["2016-01-22",1065.46,990.16,1001.78],["2016-01-29",1065.46,988.8,1019.49],["2016-02-05",1814.84,1592.89,1725.35],["2016-02-12",1814.84,1593.36,1712.94],["2016-02-19",1814.84,1648.77,1762.74],["2016-02-26",1814.84,1676.68,1791.4],["2016-03-04",1865.72,1766.94,1892.61],["2016-03-11",1865.72,1776.28,1915.09],["2016-03-18",1865.72,1777.96,1941.33],["2016-03-25",1865.72,1806.36,1928.73],["2016-04-01",2631.61,2618.83,2736.87],["2016-04-08",2631.61,2581.3,2705.31],["2016-04-15",2631.61,2659.44,2749.87],["2016-04-22",2631.61,2572.84,2764.49],["2016-04-29",2687.11,2599.75,2784.99],["2016-05-06",2687.11,2655.3,2775.71],["2016-05-13",2726.73,2718.81,2802.94],["2016-05-20",2726.73,2704.25,2812.81],["2016-05-27",2726.73,2776.03,2878.13],["2016-06-03",2726.73,2759.14,2879.27],["2016-06-10",2845.52,2857.21,2994.03],["2016-06-17",3038.02,2971.8,3152.23],["2016-06-24",3038.02,2913.85,3101.13],["2016-07-01",3038.02,3004.84,3202.59],["2016-07-08",3116.69,3134.8,3325.59],["2016-07-15",3134.42,3183.33,3393.53],["2016-07-22",3134.42,3246.52,3415.11],["2016-07-29",3134.42,3331.24,3413.46],["2016-08-05",3933.34,4183.08,4236.27],["2016-08-12",3933.34,4193.56,4241.47],["2016-08-19",3933.34,4150.62,4244.13],["2016-08-26",3933.34,4143.62,4215.91],["2016-09-02",3933.34,4154.75,4239.49],["2016-09-09",3933.34,4107.48,4139.34],["2016-09-16",4731.31,4971.47,4961.92],["2016-09-23",4731.31,5060.04,5021.4],["2016-09-30",4731.31,5050.43,5031.62],["2016-10-07",4731.31,5040.03,5001.33],["2016-10-14",4763.37,5071.77,4985.82],["2016-10-21",4763.37,5164.08,5006.18],["2016-10-28",4881.02,5211.33,5088.7],["2016-11-04",4940.82,5061.05,5051.77],["2016-11-11",5059.84,5136.84,5366.34],["2016-11-18",5059.84,5182.24,5414.34],["2016-11-25",5059.84,5231.48,5493.0],["2016-12-02",5059.84,5096.98,5443.27],["2016-12-09",5159.8,5461.1,5715.97],["2016-12-16",5159.8,5452.89,5714.36],["2016-12-23",5159.8,5447.12,5731.28],["2016-12-30",5159.8,5359.58,5669.65],["2017-01-06",5913.47,6385.84,6530.03],["2017-01-13",5913.47,6467.47,6524.12],["2017-01-20",5913.47,6434.54,6515.96],["2017-01-27",6033.44,6710.5,6704.47],["2017-02-03",6033.44,6578.72,6715.31],["2017-02-10",6033.44,6690.27,6774.07],["2017-02-17",6033.44,6789.25,6882.17],["2017-02-24",6033.44,6805.51,6932.64],["2017-03-03",6033.44,6838.38,6982.05],["2017-03-10",6057.21,6919.73,6977.82],["2017-03-17",6102.21,7015.05,7042.67],["2017-03-24",6102.21,6857.17,6942.33],["2017-03-31",6102.21,7011.24,6999.55],["2017-04-07",6160.65,7056.74,7040.96],["2017-04-14",6300.57,7154.46,7101.44],["2017-04-21",6300.57,7292.85,7163.03],["2017-04-28",6300.57,7656.58,7272.35],["2017-05-05",6300.57,7792.42,7320.36],["2017-05-12",6300.57,7875.61,7301.12],["2017-05-19",6300.57,7844.05,7277.95],["2017-05-26",6300.57,8106.9,7384.7],["2017-06-02",6453.33,8312.66,7613.62],["2017-06-09",6453.33,8092.84,7592.94],["2017-06-16",6453.33,8038.79,7601.75],["2017-06-23",6496.93,8266.32,7662.38],["2017-06-30",6496.93,7938.96,7617.81],["2017-07-07",6496.93,8000.09,7628.43],["2017-07-14",6557.95,8322.33,7798.21],["2017-07-21",6557.95,8466.85,7841.93],["2017-07-28",8574.86,10372.3,9854.96],["2017-08-04",8592.37,10290.97,9895.35],["2017-08-11",8592.37,9982.28,9760.26],["2017-08-18",8617.36,9925.23,9727.98],["2017-08-25",8617.36,9917.44,9800.97],["2017-09-01",8617.36,10172.84,9940.86],["2017-09-08",8617.36,10051.05,9882.92],["2017-09-15",8617.36,10094.01,10044.12],["2017-09-22",8667.75,10096.32,10103.52],["2017-09-29",8667.75,10208.69,10175.9],["2017-10-06",8667.75,10460.3,10303.14],["2017-10-13",8667.75,10567.7,10320.17],["2017-10-20",8667.75,10543.43,10411.44],["2017-10-27",8667.75,10892.53,10435.67],["2017-11-03",8667.75,11030.36,10466.36],["2017-11-10",8719.81,10916.87,10503.32],["2017-11-17",8719.81,10932.68,10497.34],["2017-11-24",8786.28,11251.15,10662.21],["2017-12-01",8786.28,10997.51,10832.71],["2017-12-08",8810.32,11107.17,10898.93],["2017-12-15",8982.99,11505.28,11175.89],["2017-12-22",8982.99,11463.34,11209.52],["2017-12-29",8982.99,11326.65,11173.01],["2018-01-05",8982.99,11877.42,11466.51],["2018-01-12",8982.99,12198.72,11651.33],["2018-01-19",8982.99,12233.1,11753.47],["2018-01-26",10310.3,14091.38,13362.14],["2018-02-02",10310.3,13713.34,12852.38],["2018-02-09",10310.3,12942.8,12196.39],["2018-02-16",10310.3,13717.33,12729.89],["2018-02-23",11413.89,15194.25,13919.54],["2018-03-02",11413.89,15082.18,13644.03],["2018-03-09",11413.89,15928.17,14133.25],["2018-03-16",11413.89,15752.9,13964.06],["2018-03-23",11453.24,14699.24,13174.11],["2018-03-30",11483.69,14661.34,13475.07],["2018-04-06",11627.68,14478.27,13433.99],["2018-04-13",11627.68,14824.6,13708.34],["2018-04-20",11627.68,15337.08,13782.52],["2018-04-27",11627.68,15257.02,13782.46],["2018-05-04",11722.84,15640.34,13848.62],["2018-05-11",11722.84,15976.25,14193.14],["2018-05-18",11722.84,15675.09,14126.8],["2018-05-25",11780.03,15988.99,14230.54],["2018-06-01",11780.03,16411.49,14307.66],["2018-06-08",11780.03,16574.24,14544.86],["2018-06-15",11780.03,16862.01,14555.37],["2018-06-22",11780.03,16859.69,14428.32],["2018-06-29",11780.03,16462.64,14239.9],["2018-07-06",11780.03,16782.11,14462.2],["2018-07-13",11780.03,17376.54,14685.66],["2018-07-20",12090.13,17649.61,15001.96],["2018-07-27",12090.13,17857.88,15093.84],["2018-08-03",12090.13,17892.22,15214.5],["2018-08-10",12092.32,18069.05,15189.37],["2018-08-17",12092.32,17787.59,15289.93],["2018-08-24",12111.74,18092.41,15443.9],["2018-08-31",12111.74,18512.31,15595.43],["2018-09-07",12111.74,17851.65,15442.43],["2018-09-14",12111.74,18012.44,15629.14],["2018-09-21",12111.74,17808.14,15763.93],["2018-09-28",12274.9,18504.09,15847.1],["2018-10-05",12550.39,18017.88,15969.09],["2018-10-12",12550.39,17256.73,15319.94],["2018-10-19",12550.39,17081.58,15326.84],["2018-10-26",12550.39,16545.09,14723.88],["2018-11-02",12631.54,16763.4,15167.81],["2018-11-09",12631.54,16974.18,15503.26],["2018-11-16",12925.61,16687.04,15559.73],["2018-11-23",12925.61,15834.97,14973.6],["2018-11-30",13187.04,17486.29,15979.01],["2018-12-07",13187.04,16738.52,15251.44],["2018-12-14",13187.04,16629.69,15065.26],["2018-12-21",13225.3,15130.32,14042.64],["2018-12-28",13225.3,15972.67,14449.37],["2019-01-04",13225.3,16511.87,14723.76],["2019-01-11",13225.3,16831.02,15103.01],["2019-01-18",13225.3,17361.0,15540.53],["2019-01-25",13335.9,17415.0,15619.52],["2019-02-01",13335.9,17530.08,15871.86],["2019-02-08",13374.43,17494.08,15927.64],["2019-02-15",13374.43,17759.02,16335.49],["2019-02-22",13374.43,17852.91,16442.3],["2019-03-01",13539.05,18114.26,16683.21],["2019-03-08",13539.05,17910.24,16329.21],["2019-03-15",13539.05,18569.31,16810.41],["2019-03-22",13539.05,18751.95,16684.37],["2019-03-29",13539.05,18711.8,16889.99],["2019-04-05",13608.06,19291.18,17312.2],["2019-04-12",13608.06,19504.61,17409.02],["2019-04-19",13608.06,19714.47,17397.31],["2019-04-26",13633.91,20364.91,17633.83],["2019-05-03",13633.91,20018.29,17672.27],["2019-05-10",13633.91,19474.48,17300.91],["2019-05-17",13671.01,19298.24,17220.09],["2019-05-24",13671.01,18773.99,17023.9],["2019-05-31",13764.51,18404.02,16676.07],["2019-06-07",13764.51,18678.05,17420.52],["2019-06-14",13764.51,19004.26,17512.07],["2019-06-21",13864.15,19752.25,18001.33],["2019-06-28",13901.15,19488.36,17988.8],["2019-07-05",13901.15,20080.27,18293.45],["2019-07-12",13901.15,20392.89,18444.04],["2019-07-19",13901.15,19985.77,18220.05],["2019-07-26",13901.15,20737.51,18523.36],["2019-08-02",13901.15,19757.17,17954.85],["2019-08-09",14233.82,20035.95,18219.98],["2019-08-16",14233.82,19877.02,18048.44],["2019-08-23",14233.82,19477.44,17792.39],["2019-08-30",15405.0,21161.83,19487.94],["2019-09-06",15405.0,21446.78,19844.25],["2019-09-13",15405.0,21738.25,20047.21],["2019-09-20",15405.0,21426.88,19948.09],["2019-09-27",15405.0,20924.17,19751.86],["2019-10-04",15405.0,21024.57,19693.45],["2019-10-11",15405.0,21128.6,19824.32],["2019-10-18",15405.3,21368.55,19934.37],["2019-10-25",15405.3,21728.03,20179.41],["2019-11-01",15405.3,21997.33,20480.64],["2019-11-08",15405.3,22129.52,20670.69],["2019-11-15",15405.3,22245.65,20864.41],["2019-11-22",15405.3,22084.13,20803.61],["2019-11-29",15554.99,22624.47,21169.2],["2019-12-06",15554.99,22705.04,21212.93],["2019-12-13",15554.99,22871.52,21376.75],["2019-12-20",15554.99,23299.56,21735.54],["2019-12-27",15554.99,23720.0,21866.25],["2020-01-03",15554.99,23818.51,21840.59],["2020-01-10",15554.99,24528.84,22055.39],["2020-01-17",15554.99,24949.94,22493.45],["2020-01-24",15554.99,24794.36,22266.2],["2020-01-31",15772.78,25016.76,22014.07],["2020-02-07",15772.78,26029.99,22720.63],["2020-02-14",15772.78,26731.75,23095.05],["2020-02-21",15772.78,26327.31,22812.5],["2020-02-28",15772.78,23639.42,20201.9],["2020-03-06",15772.78,23364.6,20333.19],["2020-03-13",15772.78,21670.95,18559.06],["2020-03-20",15772.78,19833.21,15784.16],["2020-03-27",15772.78,20932.07,17406.67],["2020-04-03",15772.78,20582.06,17054.64],["2020-04-10",15772.78,22576.66,19125.93],["2020-04-17",15772.78,24806.96,19711.85],["2020-04-24",15772.78,24862.2,19455.62],["2020-05-01",15772.78,24852.09,19418.25],["2020-05-08",15772.78,26210.88,20110.56],["2020-05-15",15832.91,26306.45,19726.76],["2020-05-22",15832.91,27240.2,20371.59],["2020-05-29",15832.91,27293.07,20990.58],["2020-06-05",15832.91,27895.41,22031.28],["2020-06-12",15832.91,27754.67,20989.26],["2020-06-19",15832.91,28801.22,21384.55],["2020-06-26",15832.91,28268.11,20773.82],["2020-07-03",15832.91,30386.67,21618.66],["2020-07-10",15832.91,32620.58,22005.59],["2020-07-17",15916.46,31434.24,22368.8],["2020-07-24",15916.46,31230.6,22308.71],["2020-07-31",15916.46,32210.84,22700.17],["2020-08-07",15916.46,32765.16,23264.62],["2020-08-14",15916.46,32852.22,23425.75],["2020-08-21",15916.46,34529.37,23605.03],["2020-08-28",15926.76,36180.54,24393.07],["2020-09-04",15926.76,34984.1,23839.75],["2020-09-11",15926.76,33174.84,23246.1],["2020-09-18",15926.76,32404.01,23105.64],["2020-09-25",15926.76,32826.68,22964.26],["2020-10-02",15926.76,33318.35,23318.46],["2020-10-09",15926.76,34783.49,24226.68],["2020-10-16",15926.76,35095.02,24276.64],["2020-10-23",15926.76,35215.79,24151.78],["2020-10-30",15975.29,33564.28,22843.18],["2020-11-06",15975.29,36685.4,24524.39],["2020-11-13",15975.29,35916.37,25067.42],["2020-11-20",15975.29,36072.39,24884.77],["2020-11-27",16000.2,37517.46,25482.03],["2020-12-04",16000.2,37982.79,25921.33],["2020-12-11",16334.42,38024.34,26009.4],["2020-12-18",16334.42,38861.54,26344.01],["2020-12-25",16334.42,38626.78,26304.94],["2021-01-01",16334.42,39318.26,26686.56],["2021-01-08",16334.42,40353.92,27188.46],["2021-01-15",16334.42,38954.43,26791.26],["2021-01-22",16334.42,41347.45,27315.44],["2021-01-29",16334.42,39731.26,26417.13],["2021-02-05",16334.42,43006.92,27650.66],["2021-02-12",16334.42,43167.48,28005.32],["2021-02-19",16384.1,42761.59,27865.16],["2021-02-26",16384.1,40600.64,27193.75],["2021-03-05",16384.1,39941.28,27421.73],["2021-03-12",16465.03,40785.49,28240.65],["2021-03-19",16465.03,40178.93,28030.67],["2021-03-26",16465.03,39757.39,28473.82],["2021-04-02",16465.03,41460.25,28803.92],["2021-04-09",16465.03,43659.82,29597.49],["2021-04-16",16465.03,44164.09,30008.47],["2021-04-23",16732.92,43948.81,30245.77],["2021-04-30",16732.92,44666.23,30257.48],["2021-05-07",16732.92,43461.52,30639.83],["2021-05-14",17015.83,42312.59,30517.95],["2021-05-21",17015.83,42446.93,30398.48],["2021-05-28",17015.83,43494.55,30761.83],["2021-06-04",17015.83,43474.96,30960.05],["2021-06-11",17305.29,44651.07,31384.25],["2021-06-18",17305.29,45261.0,30797.35],["2021-06-25",17305.29,45954.72,31646.65],["2021-07-02",17305.29,46887.51,32186.26],["2021-07-09",17305.29,47491.29,32321.91],["2021-07-16",17305.29,46871.61,32012.97],["2021-07-23",17305.29,48440.14,32644.53],["2021-07-30",17305.29,47440.27,32529.31],["2021-08-06",17305.29,47858.52,32841.34],["2021-08-13",17305.29,48068.44,33088.21],["2021-08-20",17305.29,47297.34,32906.29],["2021-08-27",17305.29,49259.57,33413.82],["2021-09-03",17305.29,50017.87,33621.28],["2021-09-10",17429.99,49583.0,33181.11],["2021-09-17",17429.99,49505.78,33001.15],["2021-09-24",17429.99,49665.85,33172.05],["2021-10-01",17429.99,48088.39,32447.23],["2021-10-08",17429.99,48586.8,32716.45],["2021-10-15",17429.99,49719.65,33317.05],["2021-10-22",17429.99,49389.3,33868.8],["2021-10-29",17429.99,51971.54,34325.85],["2021-11-05",17429.99,53427.34,35021.15],["2021-11-12",17429.99,52425.75,34925.71],["2021-11-19",17429.99,53416.71,35052.6],["2021-11-26",17429.99,51000.27,34287.45],["2021-12-03",17429.99,49536.94,33884.56],["2021-12-10",17429.99,51412.67,35187.48],["2021-12-17",17429.99,49471.49,34514.91],["2021-12-24",17429.99,51480.45,35307.59],["2021-12-31",17429.99,50842.61,35615.72],["2022-01-07",17429.99,48784.63,34963.62],["2022-01-14",17429.99,49087.35,34862.62],["2022-01-21",17429.99,44882.15,32885.99],["2022-01-28",17429.99,45045.41,33146.08],["2022-02-04",17429.99,47205.61,33668.09],["2022-02-11",17467.45,45354.34,33102.91],["2022-02-18",17467.45,44443.95,32599.54],["2022-02-25",17467.45,44494.71,32874.59],["2022-03-04",17467.45,43034.88,32468.26],["2022-03-11",17563.27,42088.2,31640.77],["2022-03-18",17563.27,45740.83,33599.76],["2022-03-25",17563.27,47342.55,34208.44],["2022-04-01",17845.46,47936.98,34515.89],["2022-04-08",17845.46,45552.72,34089.46],["2022-04-15",17845.46,44040.17,33370.04],["2022-04-22",18060.28,42055.24,32662.13],["2022-04-29",18060.28,39325.81,31598.07],["2022-05-06",18060.28,38708.46,31541.1],["2022-05-13",18060.28,37720.27,30798.44],["2022-05-20",18060.28,35603.78,29874.62],["2022-05-27",18060.28,37718.55,31853.06],["2022-06-03",18060.28,38064.15,31485.98],["2022-06-10",18060.28,36008.79,29900.49],["2022-06-17",18060.28,34355.97,28182.49],["2022-06-24",18060.28,37433.88,30003.28],["2022-07-01",18060.28,35022.31,29349.89],["2022-07-08",18060.28,37479.62,29929.81],["2022-07-15",18060.28,36065.56,29657.31],["2022-07-22",18189.05,37322.01,30551.21],["2022-07-29",18189.05,39846.98,31859.8],["2022-08-05",18189.05,40553.58,31982.49],["2022-08-12",18189.05,42060.27,33041.0],["2022-08-19",18333.83,40888.77,32798.91],["2022-08-26",18333.83,38772.19,31479.93],["2022-09-02",18333.83,37509.02,30462.73],["2022-09-09",18459.94,39288.57,31713.94],["2022-09-16",18459.94,37025.29,30213.7],["2022-09-23",18459.94,34923.4,28813.38],["2022-09-30",18459.94,33934.56,27982.6],["2022-10-07",18459.94,33927.74,28417.99],["2022-10-14",18459.94,32639.24,27982.05],["2022-10-21",18459.94,34875.36,29311.63],["2022-10-28",18459.94,33750.68,30474.12],["2022-11-04",18459.94,30718.08,29466.17],["2022-11-11",18459.94,33416.05,31213.96],["2022-11-18",18580.74,32809.16,31143.25],["2022-11-25",18580.74,32857.38,31627.56],["2022-12-02",18580.74,33863.24,32004.94],["2022-12-09",18580.74,31939.44,30933.57],["2022-12-16",18580.74,30723.41,30300.43],["2022-12-23",18580.74,29891.21,30249.3],["2022-12-30",18580.74,29717.69,30215.9],["2023-01-06",18580.74,30014.83,30661.45],["2023-01-13",18580.74,32059.59,31491.7],["2023-01-20",18580.74,33102.17,31287.86],["2023-01-27",18580.74,34977.77,32063.24],["2023-02-03",18580.74,36398.82,32589.6],["2023-02-10",18580.74,34507.96,32242.29],["2023-02-17",18580.74,34677.63,32178.52],["2023-02-24",18752.15,33402.43,31493.26],["2023-03-03",18752.15,34604.84,32109.74],["2023-03-10",18752.15,33046.94,30661.1],["2023-03-17",18761.55,35450.1,31122.13],["2023-03-24",18761.55,36378.2,31561.88],["2023-03-31",18761.55,37340.71,32667.69],["2023-04-07",18761.55,37349.84,32647.51],["2023-04-14",18771.65,37561.5,32923.78],["2023-04-21",18771.65,37102.15,32895.72],["2023-04-28",18771.65,37570.4,33187.85],["2023-05-05",18771.65,37457.03,32929.55],["2023-05-12",18771.65,39081.65,32850.81],["2023-05-19",18771.65,40762.86,33411.28],["2023-05-26",18771.65,41588.6,33527.18],["2023-06-02",19219.62,43022.49,34614.34],["2023-06-09",19219.62,43167.16,34755.07],["2023-06-16",19219.62,44242.67,35667.05],["2023-06-23",19219.62,44150.93,35177.48],["2023-06-30",19338.34,44470.47,36131.37],["2023-07-07",19338.34,44415.82,35728.58],["2023-07-14",19338.34,46258.13,36600.11],["2023-07-21",19338.34,44897.15,36855.5],["2023-07-28",19447.11,47183.29,37345.74],["2023-08-04",19447.11,46315.77,36503.3],["2023-08-11",19447.11,46068.22,36403.53],["2023-08-18",19447.11,44587.29,35656.96],["2023-08-25",19990.32,45998.18,36501.94],["2023-09-01",19990.32,47892.08,37432.2],["2023-09-08",20475.8,48140.68,37440.74],["2023-09-15",20475.8,48604.91,37394.31],["2023-09-22",20475.8,46061.67,36304.55],["2023-09-29",20475.8,46089.69,36045.09],["2023-10-06",20475.8,47395.46,36232.51],["2023-10-13",20475.8,47218.56,36401.18],["2023-10-20",20475.8,45639.49,35534.82],["2023-10-27",20475.8,43740.95,34638.64],["2023-11-03",20475.8,46648.21,36675.88],["2023-11-10",20475.8,48053.94,37171.22],["2023-11-17",20475.8,49240.04,38029.94],["2023-11-24",20475.8,49619.43,38419.44],["2023-12-01",20729.94,49404.03,38996.04],["2023-12-08",20729.94,50156.16,39088.68],["2023-12-15",20729.94,50708.69,40077.45],["2023-12-22",20729.94,52117.67,40387.01],["2023-12-29",20729.94,51794.98,40526.15],["2024-01-05",20729.94,50119.57,39917.62],["2024-01-12",20729.94,52083.98,40665.53],["2024-01-19",20729.94,53021.26,41148.54],["2024-01-26",20835.43,53933.15,41693.58],["2024-02-02",20835.43,54215.89,42279.83],["2024-02-09",20835.43,55959.72,42871.35],["2024-02-16",20835.43,54446.95,42721.93],["2024-02-23",21075.3,55453.66,43684.34],["2024-03-01",21075.3,55347.26,44117.31],["2024-03-08",21075.3,54412.87,44017.34],["2024-03-15",21075.3,54698.49,43976.28],["2024-03-22",21075.3,56998.15,44992.24],["2024-03-29",21075.3,56874.55,45172.4],["2024-04-05",21075.3,57292.88,44751.74],["2024-04-12",21075.3,57852.61,44070.0],["2024-04-19",21075.3,55027.62,42731.92],["2024-04-26",21476.26,58727.59,44284.59],["2024-05-03",21476.26,59312.76,44533.36],["2024-05-10",21476.26,59763.94,45377.01],["2024-05-17",21476.26,60895.08,46104.7],["2024-05-24",21476.26,61110.95,46125.78],["2024-05-31",21476.26,60454.28,45898.74],["2024-06-07",21558.34,62099.45,46603.9],["2024-06-14",21558.34,63337.66,47359.05],["2024-06-21",21558.34,64003.52,47657.11],["2024-06-28",21558.34,64712.39,47630.59],["2024-07-05",21558.34,67833.27,48572.19],["2024-07-12",21558.34,66619.27,49002.8],["2024-07-19",21558.34,63980.73,48048.44],["2024-07-26",22001.28,62035.79,48088.74],["2024-08-02",22001.28,60174.26,47104.37],["2024-08-09",22001.28,60083.26,47093.51],["2024-08-16",22001.28,62426.24,48974.55],["2024-08-23",22001.28,63335.68,49693.67],["2024-08-30",22001.28,62936.39,49830.11],["2024-09-06",22001.28,59442.43,47727.59],["2024-09-13",22001.28,62802.43,49663.92],["2024-09-20",22001.28,64568.38,50354.92],["2024-09-27",22001.28,65244.82,50675.19],["2024-10-04",22001.28,65615.97,50808.92],["2024-10-11",22001.28,65230.01,51384.58],["2024-10-18",22001.28,65679.14,51831.76],["2024-10-25",22001.28,66420.49,51335.42],["2024-11-01",22579.44,67928.75,51210.19],["2024-11-08",22579.44,71847.46,53610.68],["2024-11-15",22579.44,70613.32,52512.42],["2024-11-22",22579.44,70507.99,53416.34],["2024-11-29",22579.44,71919.52,53993.0],["2024-12-06",22579.44,75543.84,54529.25],["2024-12-13",22579.44,77603.64,54194.77],["2024-12-20",22579.44,76752.43,53129.78],["2024-12-27",22579.44,77149.46,53500.14],["2025-01-03",22579.44,76461.79,53257.22],["2025-01-10",22579.44,75123.91,52238.8],["2025-01-17",22579.44,76970.43,53766.94],["2025-01-24",22579.44,78376.9,54712.98],["2025-01-31",22771.75,79182.33,54366.86],["2025-02-07",22771.75,76377.98,54243.8],["2025-02-14",22771.75,77641.54,55070.32],["2025-02-21",22771.75,74949.25,54174.61],["2025-02-28",22771.75,72331.25,53657.5],["2025-03-07",22771.75,69744.47,52013.47],["2025-03-14",22771.75,67629.59,50855.71],["2025-03-21",22771.75,67631.97,51127.35],["2025-03-28",22771.75,65772.65,50350.11],["2025-04-04",22771.75,59845.16,45793.19],["2025-04-11",22771.75,64372.16,48415.19],["2025-04-18",22771.75,62097.4,47693.66],["2025-04-25",22771.75,67068.34,49889.78],["2025-05-02",22771.75,68720.53,51355.16],["2025-05-09",22771.75,67361.9,51126.2],["2025-05-16",22771.75,72642.6,53852.74],["2025-05-23",22771.75,71589.85,52461.39],["2025-05-30",22771.75,73156.55,53456.4],["2025-06-06",22771.75,74156.52,54278.49],["2025-06-13",22771.75,73877.78,54083.7],["2025-06-20",22771.75,72832.34,54016.44],["2025-06-27",22771.75,76978.99,55881.43],["2025-07-04",22947.98,77438.74,57038.4],["2025-07-11",22947.98,77356.83,56870.45],["2025-07-18",22947.98,78507.91,57216.62],["2025-07-25",22947.98,79774.47,58058.1],["2025-08-01",22947.98,77340.26,56696.7],["2025-08-08",22947.98,81330.21,58082.35],["2025-08-15",22947.98,82471.72,58655.82],["2025-08-22",22947.98,82557.48,58832.44],["2025-08-29",23155.12,83289.23,58990.64],["2025-09-05",23155.12,86516.59,59210.98],["2025-09-12",23155.12,87860.83,60159.76],["2025-09-19",23155.12,90922.96,60909.27],["2025-09-26",23155.12,89307.07,60728.03],["2025-10-03",23155.12,89140.21,61403.76],["2025-10-10",23405.55,86908.3,60169.14],["2025-10-17",23405.55,89539.34,61199.95],["2025-10-24",23405.55,91569.43,62378.17],["2025-10-31",23405.55,95719.62,62829.66],["2025-11-07",23405.55,93604.6,61818.02],["2025-11-14",23405.55,92547.38,61892.1],["2025-11-21",23405.55,92984.3,60712.68],["2025-11-28",23478.14,98065.84,63057.81],["2025-12-05",23478.14,98904.86,63279.59],["2025-12-12",23478.14,96927.74,62896.09],["2025-12-19",23478.14,97313.13,62977.84],["2025-12-26",23478.14,98826.25,63867.59],["2026-01-02",23478.14,97443.45,63230.59],["2026-01-09",23478.14,100584.27,64232.52],["2026-01-16",23478.14,99070.7,64004.35],["2026-01-23",23478.14,98943.06,63789.45],["2026-01-30",23478.14,100156.52,64011.32],["2026-02-06",23478.14,95049.69,63956.1],["2026-02-13",23478.14,91195.61,63095.08],["2026-02-20",23478.14,93571.31,63793.63],["2026-02-27",23478.14,93102.35,63524.84],["2026-03-06",23569.23,91941.59,62351.36],["2026-03-13",23569.23,90925.91,61379.38],["2026-03-20",23569.23,89475.63,60229.64],["2026-03-27",23569.23,84510.46,58963.95],["2026-04-03",23569.23,89210.91,60956.47],["2026-04-10",23569.23,94489.49,63140.88],["2026-04-17",23924.37,101624.41,66379.78],["2026-04-24",23924.37,102089.51,66749.89],["2026-05-01",23924.37,106863.53,67360.8],["2026-05-08",23924.37,110213.47,68950.35],["2026-05-15",23924.37,109064.42,69065.06],["2026-05-22",23924.37,107869.4,69693.79],["2026-05-29",23924.37,108451.29,70697.6],["2026-06-05",23924.37,103708.33,68896.75],["2026-06-12",23924.37,101675.95,69353.19],["2026-06-19",23924.37,103506.47,70018.36],["2026-06-26",24026.82,97719.46,68761.0],["2026-07-03",24026.82,102624.32,69981.63],["2026-07-10",24026.82,103593.39,70860.8],["2026-07-17",24026.82,101979.74,69765.5],["2026-07-24",24026.82,96069.57,69349.31],["2026-07-31",24026.82,103180.2,70082.64],["2026-08-07",24026.82,105955.72,72598.25],["2026-08-14",24130.0,104454.82,72986.84],["2026-08-21",24130.0,103635.68,71971.45],["2026-08-28",24130.0,104883.42,72330.33],["2026-09-04",24130.0,103483.95,72421.81],["2026-09-11",24130.0,102976.93,71859.79]]};
+const EP = DATA.episodes; // [ep,title,date,subject,ticker,status,buy,val,ret,gain,manual,reason]
+const WK = DATA.weekly;   // [date,invested,portfolio,benchmark]
+
+function fmtMoney(n, d){ d = d===undefined?0:d; return '$'+n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function fmtPct(n){ return (n>0?'+':'')+n.toFixed(1)+'%'; }
+
+/* ---------------- Rankings ---------------- */
+const bought = EP.filter(r=>r[5]!=='skipped');
+function topBottom(idx){
+  const sorted = bought.slice().sort((a,b)=>a[idx]-b[idx]);
+  return { top: sorted.slice(-10).reverse(), bot: sorted.slice(0,10) };
+}
+function renderRankList(el, rows, idx, isPct){
+  const maxAbs = Math.max(...rows.map(r=>Math.abs(r[idx])), 1);
+  el.innerHTML = rows.map((r,i)=>{
+    const v = r[idx];
+    const pos = v>=0;
+    const pct = Math.max(Math.abs(v)/maxAbs*100, 2);
+    const label = isPct ? fmtPct(v) : (v>=0?'+':'-')+fmtMoney(Math.abs(v));
+    return `<div class="rank-row">
+      <span class="n">${i+1}</span>
+      <span class="name">${r[3]} <span class="tk">${r[4]||''}</span></span>
+      <span class="bar-wrap" style="min-width:120px;">
+        <span class="bar" style="${pos?'left':'right'}:0;width:${pct}%;background:${pos?'var(--pos)':'var(--neg)'};opacity:.85;"></span>
+      </span>
+      <span class="val ${pos?'pos':'neg'}">${label}</span>
+    </div>`;
+  }).join('');
+}
+const gainRank = topBottom(9);
+const retRank = topBottom(8);
+renderRankList(document.getElementById('rankGainTop'), gainRank.top, 9, false);
+renderRankList(document.getElementById('rankGainBot'), gainRank.bot, 9, false);
+renderRankList(document.getElementById('rankRetTop'), retRank.top, 8, true);
+renderRankList(document.getElementById('rankRetBot'), retRank.bot, 8, true);
+
+/* ---------------- Table ---------------- */
+const tbody = document.getElementById('epTbody');
+function statusBadge(s){
+  const label = s==='public'?'Public':s==='parent'?'Parent':'Skipped';
+  return `<span class="badge ${s}"><span class="dot"></span>${label}</span>`;
+}
+function renderTable(rows){
+  tbody.innerHTML = rows.map(r=>{
+    const [ep,title,date,subject,ticker,status,buy,val,ret,gain,manual,reason] = r;
+    const skipped = status==='skipped';
+    const flagCell = skipped
+      ? `<span class="reason">${reason||'no public parent'}</span>`
+      : (manual ? `<span class="manual-tag">manual price</span>` : '');
+    return `<tr class="${skipped?'skipped':''}">
+      <td class="num">${ep}</td>
+      <td>${title}</td>
+      <td class="mono">${date}</td>
+      <td>${subject}</td>
+      <td class="ticker">${ticker||'&mdash;'}</td>
+      <td>${statusBadge(status)}</td>
+      <td class="num">${buy!=null?fmtMoney(buy,2):'&mdash;'}</td>
+      <td class="num">${val!=null?fmtMoney(val,2):'&mdash;'}</td>
+      <td class="num ${ret!=null?(ret>=0?'pos':'neg'):''}">${ret!=null?fmtPct(ret):'&mdash;'}</td>
+      <td class="num ${gain!=null?(gain>=0?'pos':'neg'):''}">${gain!=null?(gain>=0?'+':'-')+fmtMoney(Math.abs(gain),2):'&mdash;'}</td>
+      <td>${flagCell}</td>
+    </tr>`;
+  }).join('');
+}
+renderTable(EP);
+
+let sortKey = 0, sortDir = 1;
+document.querySelectorAll('#epTable thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = +th.dataset.key, type = th.dataset.type;
+    sortDir = (sortKey===key) ? -sortDir : 1;
+    sortKey = key;
+    document.querySelectorAll('#epTable thead th').forEach(h=>{h.classList.remove('sorted'); h.querySelector('.arrow')?.remove();});
+    th.classList.add('sorted');
+    th.insertAdjacentHTML('beforeend', `<span class="arrow">${sortDir>0?'▴':'▾'}</span>`);
+    const rows = EP.slice().sort((a,b)=>{
+      let av=a[key], bv=b[key];
+      if(type==='num'){ av = av==null?-Infinity:av; bv = bv==null?-Infinity:bv; return (av-bv)*sortDir; }
+      av = (av||'').toString().toLowerCase(); bv = (bv||'').toString().toLowerCase();
+      return av.localeCompare(bv)*sortDir;
+    });
+    renderTable(rows);
+  });
+});
+
+/* ---------------- Chart ---------------- */
+const svg = document.getElementById('chartSvg');
+const tip = document.getElementById('chartTip');
+const NS = 'http://www.w3.org/2000/svg';
+const PAD = { l:56, r:64, t:16, b:26 };
+const W = 980, H = 400;
+const plotW = W - PAD.l - PAD.r, plotH = H - PAD.t - PAD.b;
+const dates = WK.map(d=>new Date(d[0]).getTime());
+const x0 = dates[0], x1 = dates[dates.length-1];
+function xScale(t){ return PAD.l + (t-x0)/(x1-x0)*plotW; }
+const xs = dates.map(xScale);
+
+let logMode = false;
+function niceStep(span){
+  const raw = span/5, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw/mag;
+  const step = norm<1.5?1:norm<3.5?2:norm<7.5?5:10;
+  return step*mag;
+}
+function buildYScale(){
+  const allVals = WK.flatMap(d=>[d[1],d[2],d[3]]);
+  const max = Math.max(...allVals), min = Math.min(...allVals.filter(v=>v>0));
+  if(logMode){
+    const lo = Math.log10(Math.max(min,1)), hi = Math.log10(max*1.05);
+    return { fn:v=>PAD.t+plotH-(Math.log10(Math.max(v,1))-lo)/(hi-lo)*plotH, lo, hi, log:true, max };
+  }
+  const top = Math.ceil(max*1.08/niceStep(max))*niceStep(max);
+  return { fn:v=>PAD.t+plotH-(v/top)*plotH, top, log:false };
+}
+function yTicks(ys){
+  if(ys.log){
+    const ticks=[]; let p=Math.pow(10,Math.ceil(ys.lo));
+    while(Math.log10(p)<=ys.hi){ ticks.push(p); p*=10; }
+    if(ticks.length<3){ ticks.length=0; let p2=Math.pow(10,Math.floor(ys.lo)); while(Math.log10(p2)<=ys.hi){ ticks.push(p2*1); ticks.push(p2*3); p2*=10; } }
+    return ticks;
+  }
+  const step = ys.top/4, ticks=[]; for(let v=0; v<=ys.top+1; v+=step) ticks.push(Math.round(v));
+  return ticks;
+}
+function pathFor(idx, ys){
+  return WK.map((d,i)=>`${i===0?'M':'L'}${xs[i].toFixed(1)},${ys.fn(d[idx]).toFixed(1)}`).join(' ');
+}
+function areaFor(idx, ys){
+  const line = WK.map((d,i)=>`${i===0?'M':'L'}${xs[i].toFixed(1)},${ys.fn(d[idx]).toFixed(1)}`).join(' ');
+  return `${line} L${xs[xs.length-1].toFixed(1)},${(PAD.t+plotH).toFixed(1)} L${xs[0].toFixed(1)},${(PAD.t+plotH).toFixed(1)} Z`;
+}
+function fmtAxisMoney(v){
+  if(v>=1000) return '$'+Math.round(v/1000)+'k';
+  return '$'+Math.round(v);
+}
+function drawChart(){
+  const ys = buildYScale();
+  const ticks = yTicks(ys);
+  let svgParts = [];
+  svgParts.push(`<defs>
+    <linearGradient id="gradPortfolio" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--s-portfolio)" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="var(--s-portfolio)" stop-opacity="0"/>
+    </linearGradient>
+  </defs>`);
+  // gridlines + axis labels
+  ticks.forEach(t=>{
+    const y = ys.fn(t);
+    svgParts.push(`<line class="gridline" x1="${PAD.l}" x2="${W-PAD.r}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/>`);
+    svgParts.push(`<text class="axis" x="${PAD.l-8}" y="${(y+3.5).toFixed(1)}" text-anchor="end">${fmtAxisMoney(t)}</text>`);
+  });
+  // x-axis year labels
+  const years = [...new Set(WK.map(d=>d[0].slice(0,4)))];
+  years.forEach(y=>{
+    const first = WK.find(d=>d[0].slice(0,4)===y);
+    const x = xScale(new Date(first[0]).getTime());
+    svgParts.push(`<text class="axis" x="${x.toFixed(1)}" y="${H-6}" text-anchor="middle">${y}</text>`);
+  });
+  // series
+  svgParts.push(`<path d="${areaFor(2,ys)}" fill="url(#gradPortfolio)" stroke="none"/>`);
+  svgParts.push(`<path d="${pathFor(1,ys)}" fill="none" stroke="var(--s-invested)" stroke-width="1.6" stroke-dasharray="4 3"/>`);
+  svgParts.push(`<path d="${pathFor(3,ys)}" fill="none" stroke="var(--s-benchmark)" stroke-width="2"/>`);
+  svgParts.push(`<path d="${pathFor(2,ys)}" fill="none" stroke="var(--s-portfolio)" stroke-width="2.4"/>`);
+  // end labels
+  const last = WK[WK.length-1];
+  const lx = xs[xs.length-1];
+  svgParts.push(`<text class="endlabel" x="${(lx+6).toFixed(1)}" y="${(ys.fn(last[2])+4).toFixed(1)}" fill="var(--s-portfolio)">${fmtAxisMoney(last[2])}</text>`);
+  svgParts.push(`<text class="endlabel" x="${(lx+6).toFixed(1)}" y="${(ys.fn(last[3])+4).toFixed(1)}" fill="var(--s-benchmark)">${fmtAxisMoney(last[3])}</text>`);
+  svgParts.push(`<text class="endlabel" x="${(lx+6).toFixed(1)}" y="${(ys.fn(last[1])+4).toFixed(1)}" fill="var(--s-invested)">${fmtAxisMoney(last[1])}</text>`);
+  // hover overlay + crosshair (created once, positions updated in JS)
+  svgParts.push(`<line id="hoverLine" x1="0" x2="0" y1="${PAD.t}" y2="${PAD.t+plotH}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 2" opacity="0"/>`);
+  svgParts.push(`<circle id="dotP" r="3.5" fill="var(--s-portfolio)" opacity="0"/>`);
+  svgParts.push(`<circle id="dotB" r="3.5" fill="var(--s-benchmark)" opacity="0"/>`);
+  svgParts.push(`<circle id="dotI" r="3.5" fill="var(--s-invested)" opacity="0"/>`);
+  svgParts.push(`<rect id="hoverRect" x="${PAD.l}" y="${PAD.t}" width="${plotW}" height="${plotH}" fill="transparent" style="cursor:crosshair"/>`);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = svgParts.join('');
+
+  const rect = svg.querySelector('#hoverRect');
+  rect.addEventListener('mousemove', (e)=>{
+    const pt = svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY;
+    const loc = pt.matrixTransform(svg.getScreenCTM().inverse());
+    let i = 0, best = Infinity;
+    xs.forEach((x,idx)=>{ const d=Math.abs(x-loc.x); if(d<best){best=d; i=idx;} });
+    const d = WK[i];
+    svg.querySelector('#hoverLine').setAttribute('x1', xs[i]); svg.querySelector('#hoverLine').setAttribute('x2', xs[i]);
+    svg.querySelector('#hoverLine').setAttribute('opacity', 1);
+    ['dotP','dotB','dotI'].forEach((id,k)=>{
+      const el = svg.querySelector('#'+id);
+      const val = k===0?d[2]:k===1?d[3]:d[1];
+      el.setAttribute('cx', xs[i]); el.setAttribute('cy', ys.fn(val)); el.setAttribute('opacity', 1);
+    });
+    const svgRect = svg.getBoundingClientRect();
+    const px = svgRect.left + xs[i]/W*svgRect.width;
+    const py = svgRect.top + ys.fn(d[2])/H*svgRect.height;
+    const wrapRect = svg.parentElement.getBoundingClientRect();
+    tip.style.left = (px - wrapRect.left) + 'px';
+    tip.style.top = (py - wrapRect.top) + 'px';
+    tip.innerHTML = `<div class="t-date">${d[0]}</div>
+      <div class="row"><span style="color:var(--s-portfolio)">Portfolio</span><span class="mono">${fmtMoney(d[2])}</span></div>
+      <div class="row"><span style="color:var(--s-benchmark)">S&amp;P 500 TR</span><span class="mono">${fmtMoney(d[3])}</span></div>
+      <div class="row"><span style="color:var(--s-invested)">Invested</span><span class="mono">${fmtMoney(d[1])}</span></div>`;
+    tip.classList.add('show');
+  });
+  rect.addEventListener('mouseleave', ()=>{
+    tip.classList.remove('show');
+    ['hoverLine','dotP','dotB','dotI'].forEach(id=>svg.querySelector('#'+id).setAttribute('opacity',0));
+  });
+}
+drawChart();
+document.getElementById('btnLinear').addEventListener('click', (e)=>{ logMode=false; e.target.classList.add('active'); document.getElementById('btnLog').classList.remove('active'); drawChart(); });
+document.getElementById('btnLog').addEventListener('click', (e)=>{ logMode=true; e.target.classList.add('active'); document.getElementById('btnLinear').classList.remove('active'); drawChart(); });
+window.addEventListener('resize', drawChart);
+</script>

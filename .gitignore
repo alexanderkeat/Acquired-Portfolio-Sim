@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+prices.csv
+splits.csv
+divfactor.csv
+review/rss.xml
+review/rss_items.txt
+.DS_Store

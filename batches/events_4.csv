@@ -1,0 +1,4 @@
+ticker,date,type,cash_per_share,acquirer_ticker,ratio,note
+WORK,2021-07-21,stock_takeout,26.79,CRM,0.0776,"ep76; Salesforce completed acquisition of Slack, $26.79 cash + 0.0776 CRM shares per WORK share"
+9984.T,2021-10-20,divest,,,,"ep83; WeWork completed SPAC merger with BowX Acquisition Corp and began trading independently as NYSE:WE on 2021-10-21; SoftBank stake diluted, treat as divest of episode subject, approx"
+TWTR,2022-10-27,cash_takeout,54.20,,,"ep100; Twitter acquired by Elon Musk for $54.20/share cash, deal closed 2022-10-27"

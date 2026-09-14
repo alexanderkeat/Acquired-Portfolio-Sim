@@ -1,0 +1,100 @@
+{
+  "total_invested": 24130.0,
+  "portfolio_value": 102976.93,
+  "multiple": 4.268,
+  "xirr": 0.2054,
+  "benchmark_value": 71859.79,
+  "benchmark_multiple": 2.978,
+  "benchmark_xirr": 0.1542,
+  "n_bought": 114,
+  "n_skipped": 55,
+  "n_flagged": 64,
+  "best_by_return": [
+    [
+      "Tesla",
+      1667.7
+    ],
+    [
+      "Siri",
+      1213.7
+    ],
+    [
+      "NeXT (Live show at the GeekWire Summit)",
+      1135.0
+    ],
+    [
+      "P.A. Semi + AuthenTec",
+      1104.9
+    ],
+    [
+      "Acompli, Sunrise, and Wunderlist (with Kurt DelBene)",
+      1011.6
+    ]
+  ],
+  "worst_by_return": [
+    [
+      "Virgin Galactic",
+      -99.4
+    ],
+    [
+      "The Stitch Fix IPO",
+      -87.7
+    ],
+    [
+      "Peloton",
+      -86.8
+    ],
+    [
+      "The Lyft IPO",
+      -77.8
+    ],
+    [
+      "Meituan",
+      -76.5
+    ]
+  ],
+  "best_by_gain": [
+    [
+      "YouTube",
+      6085.04
+    ],
+    [
+      "Writely (Google Docs)",
+      6068.53
+    ],
+    [
+      "Android",
+      6036.45
+    ],
+    [
+      "Waze",
+      6035.5
+    ],
+    [
+      "Nest",
+      5730.83
+    ]
+  ],
+  "worst_by_gain": [
+    [
+      "Herm\u00e8s",
+      -73.19
+    ],
+    [
+      "Nike",
+      -69.18
+    ],
+    [
+      "LVMH",
+      -68.85
+    ],
+    [
+      "Meituan",
+      -61.88
+    ],
+    [
+      "Porsche (with Doug DeMuro)",
+      -60.38
+    ]
+  ]
+}

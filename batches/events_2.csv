@@ -1,0 +1,5 @@
+ticker,date,type,cash_per_share,acquirer_ticker,ratio,note
+WFM,2017-08-28,cash_takeout,42.00,,,"ep36; Amazon acquisition of Whole Foods closed 2017-08-28 at $42.00/share cash"
+ATVI,2023-10-13,cash_takeout,95.00,,,"ep37; Microsoft acquisition of Activision Blizzard closed 2023-10-13 at $95.00/share cash"
+HPE,2017-09-01,divest,,,,"ep39; HPE spun off/merged its software business (which had absorbed Opsware/HP Software) with Micro Focus, closed 2017-09-01; approx, treating as divestiture of the Opsware-descended business line"
+YHOO,2019-09-23,cash_takeout,51.50,,,"ep30; approx - Yahoo sold its operating business to Verizon 2017-06-13 and was renamed Altaba (holding company for Alibaba/Yahoo Japan stakes); Altaba began liquidating in 2019, paying a $51.50/share pre-dissolution distribution 2019-09-23, with smaller residual liquidating distributions continuing through 2023; using the main 2019 distribution as the approximate takeout value"

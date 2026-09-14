@@ -1,0 +1,4 @@
+ticker,date,type,cash_per_share,acquirer_ticker,ratio,note
+VA,2016-12-14,cash_takeout,57.00,,,"Alaska Air Group completed acquisition of Virgin America for $57.00/share cash; ep10"
+LNKD,2016-12-08,cash_takeout,196.00,,,"Microsoft completed acquisition of LinkedIn for $196.00/share cash; ep14"
+SSP,2020-10-19,divest,,,,"E.W. Scripps sold Stitcher/Midroll to SiriusXM (~$325M incl. earnouts); ep16"

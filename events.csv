@@ -1,0 +1,13 @@
+ticker,date,type,cash_per_share,acquirer_ticker,ratio,note
+VA,2016-12-14,cash_takeout,57.0,,,Alaska Air Group completed acquisition of Virgin America for $57.00/share cash; ep10
+LNKD,2016-12-08,cash_takeout,196.0,,,Microsoft completed acquisition of LinkedIn for $196.00/share cash; ep14
+SSP,2020-10-19,divest,,,,E.W. Scripps sold Stitcher/Midroll to SiriusXM (~$325M incl. earnouts); ep16
+WFM,2017-08-28,cash_takeout,42.0,,,ep36; Amazon acquisition of Whole Foods closed 2017-08-28 at $42.00/share cash
+ATVI,2023-10-13,cash_takeout,95.0,,,ep37; Microsoft acquisition of Activision Blizzard closed 2023-10-13 at $95.00/share cash
+HPE,2017-09-01,divest,,,,"ep39; HPE spun off/merged its software business (which had absorbed Opsware/HP Software) with Micro Focus, closed 2017-09-01; approx, treating as divestiture of the Opsware-descended business line"
+WORK,2021-07-21,stock_takeout,26.79,CRM,0.0776,"ep76; Salesforce completed acquisition of Slack, $26.79 cash + 0.0776 CRM shares per WORK share"
+TWTR,2022-10-27,cash_takeout,54.2,,,"ep100; Twitter acquired by Elon Musk for $54.20/share cash, deal closed 2022-10-27"
+YHOO,2017-06-13,divest,,,,ep30; Yahoo sold operating business (incl. Overture/search ads) to Verizon; sell YHOO per rule 5
+VZ,2021-09-01,divest,,,,"ep41; Verizon sold AOL/Yahoo media unit to Apollo, closed 2021-09-01; sell VZ per rule 5"
+EB,2026-03-10,cash_takeout,4.50,,,"ep97; Eventbrite acquired by Bending Spoons (Italian tech company) for ~$500M all-cash, $4.50/share; merger effective 2026-03-10, NYSE delisting effective 2026-03-23, deal announced 2025-12-02"
+EA,2026-08-04,cash_takeout,210.0,,,"ep74; EA acquired by consortium of Public Investment Fund (PIF), Silver Lake, and Affinity Partners for $210.00/share cash; deal announced 2025-09-29, approved by stockholders 2025-12-22, closed and delisted from NASDAQ 2026-08-04"
