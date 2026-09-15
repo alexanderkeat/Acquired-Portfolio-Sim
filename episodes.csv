@@ -168,3 +168,4 @@ ep_num,title,air_date,subject,ticker,parent,status,source_note
 167,Vanguard,2026-05-17,Vanguard,,,skipped,"S19E3; https://www.acquired.fm/episodes/vanguard; Vanguard is owned by its funds/investors (mutual structure), not publicly traded, no public parent"
 168,The Walt Disney Company,2026-06-21,Walt Disney Company,DIS,,public,"S19E4; https://www.acquired.fm/episodes/the-walt-disney-company; The Walt Disney Company publicly traded, ticker DIS"
 169,Disney: The Renaissance and the Empire,2026-08-09,Walt Disney Company,DIS,,public,"S20E1; https://www.acquired.fm/episodes/disney-the-renaissance-and-the-empire; continuation of Disney story, publicly traded, ticker DIS"
+170,Home Depot,2026-09-13,The Home Depot,HD,,public,"S20E2; https://www.acquired.fm/episodes/home-depot; The Home Depot publicly traded, ticker HD; aired Sunday, fills at Monday 2026-09-14 close per rule 2"

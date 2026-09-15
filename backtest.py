@@ -223,11 +223,12 @@ def run_backtest(episodes, events, today, fetch_fn, manual_fn=load_manual_prices
 
     all_tickers = set(bought.ticker) | set(events.acquirer_ticker.dropna())
     start = bought.air_date.min()
-    prices = fetch_fn(sorted(all_tickers | {BENCH}), start, today)
+    fetch_end = today + pd.Timedelta(days=1)  # yfinance `end` is exclusive; include today's close once it prints
+    prices = fetch_fn(sorted(all_tickers | {BENCH}), start, fetch_end)
     bench_ticker = BENCH if BENCH in prices.columns and not prices[BENCH].dropna().empty else BENCH_FALLBACK
     if bench_ticker not in prices.columns:
-        prices = pd.concat([prices, fetch_fn([BENCH_FALLBACK], start, today)], axis=1)
-    splits, div_df = splits_fn(sorted(all_tickers), start, today)
+        prices = pd.concat([prices, fetch_fn([BENCH_FALLBACK], start, fetch_end)], axis=1)
+    splits, div_df = splits_fn(sorted(all_tickers), start, fetch_end)
 
     today = min(today, prices[bench_ticker].dropna().index[-1])  # ponytail: as-of = last completed close, not the calendar date
     dates = pd.bdate_range(start, today)

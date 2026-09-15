@@ -12,14 +12,14 @@ This project answers a simple question. If you had bought one share of every pub
 
 | | Acquired portfolio | S&P 500, same dollars, same dates |
 |---|---|---|
-| Total put in | $24,130 | $24,130 |
-| Worth today | $102,977 | $71,860 |
-| Multiple | 4.27x | 2.98x |
-| Annual return | 20.5% | 15.4% |
+| Total put in | $24,441 | $24,441 |
+| Worth today | $104,515 | $71,826 |
+| Multiple | 4.28x | 2.94x |
+| Annual return | 20.7% | 15.3% |
 
-As of the 11 September 2026 close, refreshed weekly. The annual return is money-weighted, meaning it accounts for the fact that cash went in gradually over eleven years rather than all at once.
+As of the 14 September 2026 close, refreshed weekly. The annual return is money-weighted, meaning it accounts for the fact that cash went in gradually over eleven years rather than all at once.
 
-Of 169 main-feed episodes, 114 produced a purchase. The other 55 were about private companies like SpaceX, Stripe, and Epic Games, or were not about a company at all.
+Of 170 main-feed episodes, 115 produced a purchase. The other 55 were about private companies like SpaceX, Stripe, and Epic Games, or were not about a company at all.
 
 **Explore the full interactive report, with every episode and a sortable table:**
 https://claude.ai/code/artifact/d36bbe9e-bbc7-4918-b4c8-37a264c92934
@@ -32,12 +32,12 @@ One share means one share. That makes the result lopsided toward whatever was ex
 
 | Episode | Bought | Cost | Worth today |
 |---|---|---|---|
-| YouTube (Alphabet) | Feb 2016 | $749 | $6,834 |
-| Google Docs (Alphabet) | Mar 2016 | $766 | $6,834 |
-| Android (Alphabet) | Sep 2016 | $798 | $6,834 |
-| Waze (Alphabet) | Aug 2016 | $799 | $6,834 |
-| Tesla | Jul 2018 | $310 | $5,482 |
-| Twitch (Amazon) | Nov 2015 | $648 | $5,136 |
+| YouTube (Alphabet) | Feb 2016 | $749 | $7,054 |
+| Google Docs (Alphabet) | Mar 2016 | $766 | $7,054 |
+| Android (Alphabet) | Sep 2016 | $798 | $7,054 |
+| Waze (Alphabet) | Aug 2016 | $799 | $7,054 |
+| Tesla | Jul 2018 | $310 | $5,385 |
+| Twitch (Amazon) | Nov 2015 | $648 | $5,071 |
 
 Six pre-split Alphabet episodes from 2016 to 2019 account for roughly $35,000 of the $79,000 total gain. Apple's six early episodes each grew more than tenfold. Nvidia's three-part series bought in at $214 to $485 a share, and each of those shares is now worth about $2,300.
 
@@ -45,7 +45,7 @@ Six pre-split Alphabet episodes from 2016 to 2019 account for roughly $35,000 of
 
 | Episode | Bought | Cost | Worth today |
 |---|---|---|---|
-| Hermès | Feb 2024 | $240 | $167 |
+| Hermès | Feb 2024 | $240 | $169 |
 | Nike | Jul 2023 | $109 | $40 |
 | LVMH | Feb 2023 | $171 | $103 |
 | Meituan | Mar 2021 | $81 | $19 |
